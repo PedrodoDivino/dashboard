@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Identidade Nexus — valores extraídos de design-system.html */
+@theme inline {
+  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+html {
+  color-scheme: dark;
+  background: #030303;
+}
+
+body {
+  background: #030303;
+  color: #fff;
+}
+
+::selection {
+  background-color: rgb(255 100 0 / 0.3);
+}
+
+/* Barra de rolagem discreta nos painéis internos */
+.nx-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.12) transparent;
+}
+
+/* Fundos fixos do template (trama diagonal + brilho de topo) */
+.nx-grid-texture {
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0.0625rem, transparent 0.0625rem);
+  background-size: 1.25rem 1.25rem;
+}
+
+.nx-glow {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 100, 0, 0.17), transparent 34rem),
+    radial-gradient(circle at 85% 28%, rgba(255, 165, 0, 0.06), transparent 28rem),
+    linear-gradient(180deg, rgba(3, 3, 3, 0.2), #030303 82%);
+}
+
+/* Brilho mais contido para o painel (sem canvas) */
+.nx-glow-soft {
+  background:
+    radial-gradient(circle at 70% -10%, rgba(255, 100, 0, 0.1), transparent 32rem),
+    radial-gradient(circle at 0% 40%, rgba(255, 165, 0, 0.035), transparent 26rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

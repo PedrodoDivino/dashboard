@@ -1,0 +1,242 @@
+{
+  "common": {
+    "appName": "Nexus",
+    "save": "Salvar alterações",
+    "saving": "Salvando…",
+    "saved": "Alterações salvas.",
+    "cancel": "Cancelar",
+    "you": "Você",
+    "never": "Nunca",
+    "noEmail": "Sem e-mail"
+  },
+  "validation": {
+    "required": "Campo obrigatório.",
+    "invalidEmail": "Informe um e-mail válido.",
+    "tooShort": "A senha precisa ter pelo menos 8 caracteres.",
+    "mismatch": "As senhas não coincidem."
+  },
+  "auth": {
+    "panel": {
+      "eyebrow": "Painel Nexus",
+      "title": "Seu produto, em um só lugar.",
+      "body": "Métricas, pessoas e configurações da sua conta, com o mesmo cuidado de cada detalhe da plataforma.",
+      "statLabel": "Disponibilidade",
+      "statValue": "99,98%",
+      "statHint": "últimos 30 dias"
+    },
+    "login": {
+      "eyebrow": "Acesso",
+      "title": "Entrar",
+      "subtitle": "Use o e-mail e a senha da sua conta.",
+      "email": "E-mail",
+      "emailPlaceholder": "voce@empresa.com",
+      "password": "Senha",
+      "passwordPlaceholder": "••••••••",
+      "forgot": "Esqueci a senha",
+      "submit": "Entrar",
+      "noAccount": "Sem conta? O acesso é feito por convite do administrador.",
+      "submitting": "Entrando…"
+    },
+    "forgot": {
+      "eyebrow": "Recuperar acesso",
+      "title": "Esqueceu a senha?",
+      "subtitle": "Informe seu e-mail e enviaremos um link para criar uma nova senha.",
+      "submit": "Enviar link",
+      "sentTitle": "Confira seu e-mail",
+      "sentBody": "Se existir uma conta para {email}, você receberá um link em instantes. O link expira em 1 hora.",
+      "back": "Voltar para o login"
+    },
+    "reset": {
+      "eyebrow": "Nova senha",
+      "title": "Defina sua nova senha",
+      "subtitle": "Também é aqui que um convidado define a senha no primeiro acesso.",
+      "password": "Nova senha",
+      "confirm": "Confirmar nova senha",
+      "hint": "Mínimo de 8 caracteres.",
+      "submit": "Salvar senha",
+      "doneTitle": "Senha atualizada",
+      "doneBody": "Sua senha foi salva e você já está conectado.",
+      "goHome": "Ir para o painel"
+    }
+  },
+  "nav": {
+    "section": "Navegação",
+    "adminSection": "Administração",
+    "home": "Início",
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "users": "Usuários",
+    "signOut": "Sair",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu"
+  },
+  "topbar": {
+    "language": "Idioma"
+  },
+  "home": {
+    "eyebrow": "Início",
+    "greeting": "Olá, {name}.",
+    "subtitleAdmin": "Visão geral da plataforma nos últimos 30 dias.",
+    "subtitleUser": "Seu uso nos últimos 30 dias.",
+    "vsPrevious": "vs. 30 dias anteriores",
+    "metrics": {
+      "activeUsers": "Usuários ativos",
+      "revenue": "Receita mensal",
+      "requests": "Requisições",
+      "uptime": "Disponibilidade",
+      "myRequests": "Minhas requisições",
+      "planUsage": "Uso do plano",
+      "savedViews": "Visões salvas",
+      "latency": "Latência média"
+    },
+    "chart": {
+      "titleAdmin": "Requisições na plataforma",
+      "titleUser": "Suas requisições",
+      "subtitle": "Por dia · 30 dias",
+      "series": "Requisições"
+    },
+    "activity": {
+      "title": "Atividade recente",
+      "sign_in": "{actor} entrou na conta",
+      "invite": "{actor} convidou {target}",
+      "user_create": "{actor} cadastrou {target}",
+      "role_change": "{actor} alterou o papel de {target}",
+      "password_reset": "{actor} redefiniu a senha",
+      "profile_update": "{actor} atualizou o perfil",
+      "user_disable": "{actor} desativou {target}",
+      "user_enable": "{actor} reativou {target}",
+      "empty": "Nenhuma atividade ainda."
+    },
+    "shortcuts": {
+      "title": "Atalhos",
+      "profile": "Editar perfil",
+      "settings": "Configurações da conta",
+      "security": "Trocar senha",
+      "users": "Convidar usuário"
+    },
+    "greetingAnonymous": "Olá."
+  },
+  "profile": {
+    "eyebrow": "Perfil",
+    "title": "Seu perfil",
+    "subtitle": "Essas informações aparecem para os outros membros da conta.",
+    "avatar": "Foto",
+    "changeAvatar": "Trocar foto",
+    "removeAvatar": "Remover",
+    "avatarHint": "JPG ou PNG, até 2 MB. Por enquanto a foto fica só na pré-visualização.",
+    "fullName": "Nome completo",
+    "email": "E-mail",
+    "emailHint": "Para trocar o e-mail, vá em Configurações › Conta.",
+    "jobTitle": "Cargo",
+    "phone": "Telefone",
+    "bio": "Bio",
+    "bioPlaceholder": "Conte um pouco sobre você…",
+    "timezone": "Fuso horário",
+    "role": "Papel",
+    "memberSince": "Membro desde",
+    "lastSignIn": "Último acesso"
+  },
+  "settings": {
+    "eyebrow": "Configurações",
+    "title": "Configurações da conta",
+    "subtitle": "Preferências, segurança e notificações.",
+    "tabs": {
+      "account": "Conta",
+      "security": "Segurança",
+      "notifications": "Notificações"
+    },
+    "account": {
+      "emailTitle": "E-mail de acesso",
+      "emailBody": "Ao trocar, enviaremos um link de confirmação para o novo endereço.",
+      "newEmail": "Novo e-mail",
+      "changeEmail": "Trocar e-mail",
+      "emailSent": "Link de confirmação enviado para {email}.",
+      "prefsTitle": "Preferências",
+      "language": "Idioma",
+      "timezone": "Fuso horário",
+      "currentEmail": "E-mail atual: {email}"
+    },
+    "security": {
+      "passwordTitle": "Trocar senha",
+      "current": "Senha atual",
+      "new": "Nova senha",
+      "confirm": "Confirmar nova senha",
+      "submit": "Atualizar senha",
+      "updated": "Senha atualizada.",
+      "sessionsTitle": "Sessões ativas",
+      "sessionsBody": "Dispositivos conectados à sua conta.",
+      "current_session": "Esta sessão",
+      "thisBrowser": "Este navegador"
+    },
+    "notifications": {
+      "title": "Notificações por e-mail",
+      "security": "Alertas de segurança",
+      "securityHint": "Novo acesso e troca de senha. Recomendado.",
+      "product": "Novidades do produto",
+      "productHint": "Lançamentos e melhorias, no máximo uma vez por mês.",
+      "weekly": "Resumo semanal",
+      "weeklyHint": "Suas métricas toda segunda-feira.",
+      "mentions": "Atividade da equipe",
+      "mentionsHint": "Convites e mudanças de papel."
+    }
+  },
+  "users": {
+    "eyebrow": "Administração",
+    "title": "Usuários",
+    "subtitle": "Convide pessoas, defina papéis e controle o acesso.",
+    "invite": "Novo usuário",
+    "inviteTitle": "Cadastrar usuário",
+    "inviteBody": "Defina o e-mail e a senha de acesso. A conta já fica ativa e a pessoa entra direto pelo login.",
+    "inviteEmail": "E-mail",
+    "inviteRole": "Papel",
+    "sendInvite": "Cadastrar",
+    "invited": "Usuário {email} cadastrado.",
+    "search": "Buscar por nome ou e-mail",
+    "count": "{count, plural, one {# usuário} other {# usuários}}",
+    "empty": "Nenhum usuário encontrado.",
+    "columns": {
+      "user": "Usuário",
+      "role": "Papel",
+      "status": "Status",
+      "lastSignIn": "Último acesso",
+      "actions": "Ações"
+    },
+    "status": {
+      "active": "Ativo",
+      "invited": "Convidado",
+      "disabled": "Desativado"
+    },
+    "disable": "Desativar",
+    "enable": "Reativar",
+    "resend": "Reenviar convite",
+    "self": "Você",
+    "denied": {
+      "title": "Acesso restrito",
+      "body": "Esta área é exclusiva para administradores.",
+      "back": "Voltar ao início"
+    },
+    "emptyAll": "Nenhum usuário cadastrado ainda. Convide o primeiro.",
+    "invitePlaceholder": "pessoa@empresa.com",
+    "resent": "Link de acesso reenviado para {email}.",
+    "invitePassword": "Senha",
+    "invitePasswordPlaceholder": "Mínimo de 8 caracteres"
+  },
+  "errors": {
+    "invalidCredentials": "E-mail ou senha incorretos.",
+    "accountDisabled": "Esta conta está desativada. Fale com o administrador.",
+    "linkExpired": "O link é inválido ou expirou. Peça um novo.",
+    "invalidEmail": "Informe um e-mail válido.",
+    "tooShort": "A senha precisa ter pelo menos 8 caracteres.",
+    "samePassword": "A nova senha precisa ser diferente da atual.",
+    "wrongPassword": "A senha atual está incorreta.",
+    "emailExists": "Já existe uma conta com este e-mail.",
+    "required": "Campo obrigatório.",
+    "generic": "Algo deu errado. Tente novamente.",
+    "signedOut": "Sua sessão expirou. Entre novamente.",
+    "forbidden": "Você não tem permissão para esta ação.",
+    "missingSecretKey": "Cadastro indisponível: configure SUPABASE_SECRET_KEY no .env.local e reinicie o servidor.",
+    "alreadyInvited": "Já existe um cadastro pendente para este e-mail.",
+    "invalidImage": "Use JPG, PNG ou WEBP de até 2 MB.",
+    "weakPassword": "Senha fraca: use letras, números e evite senhas comuns."
+  }
+}

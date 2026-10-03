@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Design system vivo da landing page Nexus: tipografia, cores, superfícies, componentes, layout, movimento e ícones.">
+<title>Nexus — Design System</title>
+<!-- Mesmas dependências do original (template_files/saved_resource.html) -->
+<script src="https://cdn.tailwindcss.com/"></script>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&amp;display=swap" rel="stylesheet">
+
+<style id="ds-docs">
+/* =====================================================================
+   ds-docs — ESTILOS AUXILIARES DE DOCUMENTAÇÃO
+   Não fazem parte do design original. Servem apenas para organizar a
+   página (rótulos, tabelas, grade de amostras) e para exibir estados
+   estáticos (.is-hover / .is-focus / .is-active).
+   ===================================================================== */
+
+/* ---- Rótulos e metadados ---- */
+.ds-label{font-family:'JetBrains Mono',monospace;font-size:0.6875rem;line-height:1rem;font-weight:500;letter-spacing:0.14rem;text-transform:uppercase;color:rgb(113 113 122)}
+.ds-meta{font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.25rem;color:rgb(161 161 170)}
+.ds-meta strong{font-weight:500;color:rgb(212 212 216)}
+.ds-code{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:rgb(255 237 213);background:rgb(255 255 255 / 0.04);border:1px solid rgb(255 255 255 / 0.1);border-radius:0.375rem;padding:0.0625rem 0.375rem;word-break:break-word}
+.ds-note{font-size:0.875rem;line-height:1.5rem;color:rgb(161 161 170);max-width:42rem}
+
+/* ---- Blocos dentro de uma seção ---- */
+.ds-block{padding-top:2.5rem;margin-top:2.5rem;border-top:1px solid rgb(255 255 255 / 0.1)}
+.ds-block:first-of-type{padding-top:0;margin-top:0;border-top:0}
+.ds-block-head{display:flex;flex-direction:column;gap:0.25rem;margin-bottom:1.25rem}
+.ds-block-title{font-size:1.25rem;line-height:1.75rem;font-weight:500;color:#fff}
+
+/* ---- Tipografia: tabela de especificações ---- */
+.ds-type-list{border-top:1px solid rgb(255 255 255 / 0.1)}
+.ds-type-row{display:grid;grid-template-columns:minmax(0,1fr);gap:0.75rem;padding:1.5rem 0;border-bottom:1px solid rgb(255 255 255 / 0.1)}
+.ds-type-row .ds-spec{font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.25rem;color:rgb(161 161 170)}
+.ds-type-row .ds-spec b{font-weight:500;color:#FFA500}
+@media (min-width:1024px){
+  .ds-type-row{grid-template-columns:10rem minmax(0,1fr) 14rem;align-items:center;gap:2rem}
+  .ds-type-row .ds-spec{text-align:right}
+}
+
+/* ---- Cores: grade de amostras ---- */
+.ds-swatches{display:grid;gap:0.75rem;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr))}
+.ds-swatch{border:1px solid rgb(255 255 255 / 0.1);border-radius:0.75rem;overflow:hidden;background:#070707}
+.ds-chip{position:relative;height:5.5rem;border-bottom:1px solid rgb(255 255 255 / 0.1);display:grid;place-items:center}
+.ds-chip-ground{background:#030303}
+.ds-chip-inset{position:absolute;inset:0.875rem;border-radius:0.5rem}
+.ds-swatch-body{padding:0.875rem;display:flex;flex-direction:column;gap:0.25rem}
+.ds-swatch-name{font-size:0.9375rem;line-height:1.25rem;font-weight:500;color:#fff}
+.ds-aa{font-size:2rem;line-height:1;font-weight:500}
+/* cores sem classe de fundo equivalente no original */
+.ds-c-66381D{background:#66381D}
+/* gradientes copiados dos estilos inline do original */
+.ds-grad-overlay{background: radial-gradient(circle at 50% 0%, rgba(255,100,0,0.17), transparent 34rem), radial-gradient(circle at 85% 28%, rgba(255,165,0,0.06), transparent 28rem), linear-gradient(180deg, rgba(3,3,3,0.2), #030303 82%);}
+.ds-grad-grid{position:absolute;inset:0;background-image: linear-gradient(135deg, rgba(255,255,255,0.08) 0.0625rem, transparent 0.0625rem); background-size: 1.25rem 1.25rem;}
+.ds-glass-under{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr)}
+.ds-glass-under span:nth-child(odd){background:#FF6400}
+.ds-glass-under span:nth-child(even){background:#FFA500}
+.ds-radius{width:3.5rem;height:3.5rem;border:1px solid rgb(255 255 255 / 0.2);background:rgb(255 100 0 / 0.1)}
+.ds-shadow-box{width:70%;height:3.5rem;border-radius:0.75rem;background:#0B0B0B;border:1px solid rgb(255 255 255 / 0.1)}
+
+/* ---- Componentes: estados lado a lado ---- */
+.ds-states{display:grid;gap:0.75rem;grid-template-columns:repeat(auto-fill,minmax(12.5rem,1fr))}
+.ds-state{display:flex;flex-direction:column;gap:0.875rem;align-items:flex-start;padding:1rem;border:1px dashed rgb(255 255 255 / 0.12);border-radius:0.75rem;min-width:0}
+.ds-state > :not(.ds-label){max-width:100%}
+.ds-state-live{border-style:solid;border-color:rgb(255 100 0 / 0.3)}
+.ds-state-wide{grid-column:1 / -1}
+.ds-stretch{align-self:stretch}
+
+/* ---- Tabelas (layout, breakpoints) ---- */
+.ds-table-wrap{overflow-x:auto;border:1px solid rgb(255 255 255 / 0.1);border-radius:0.75rem}
+.ds-table{width:100%;border-collapse:collapse;font-size:0.875rem;line-height:1.375rem;color:rgb(212 212 216);min-width:40rem}
+.ds-table th{font-family:'JetBrains Mono',monospace;font-size:0.6875rem;font-weight:500;letter-spacing:0.12rem;text-transform:uppercase;color:rgb(113 113 122);text-align:left;padding:0.75rem 1rem;background:#090909;border-bottom:1px solid rgb(255 255 255 / 0.1)}
+.ds-table td{padding:0.75rem 1rem;border-bottom:1px solid rgb(255 255 255 / 0.06);vertical-align:top}
+.ds-table tr:last-child td{border-bottom:0}
+.ds-table td:first-child{color:#fff;font-weight:500}
+.ds-space-bar{height:0.5rem;border-radius:0.125rem;background:#FF6400}
+.ds-w-1{width:1px}.ds-w-12{width:12px}.ds-w-16{width:16px}.ds-w-24{width:24px}.ds-w-32{width:32px}.ds-w-40{width:40px}.ds-w-64{width:64px}.ds-w-112{width:112px}
+
+/* ---- Movimento ---- */
+.ds-motion-grid{display:grid;gap:0.75rem}
+@media (min-width:1024px){.ds-motion-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ds-motion-card{display:flex;flex-direction:column;gap:1rem;padding:1.25rem;border:1px solid rgb(255 255 255 / 0.1);border-radius:0.75rem;background:#090909;min-width:0}
+.ds-motion-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:0.75rem}
+.ds-stage{position:relative;min-height:9rem;padding:1rem;border:1px dashed rgb(255 255 255 / 0.12);border-radius:0.75rem;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:0.5rem}
+.ds-hover-row{display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center}
+.ds-thumb{width:11rem}
+
+/* ---- Ícones ---- */
+.ds-icon-grid{display:grid;gap:1px;grid-template-columns:repeat(auto-fill,minmax(8.5rem,1fr));background:rgb(255 255 255 / 0.1);border:1px solid rgb(255 255 255 / 0.1);border-radius:0.75rem;overflow:hidden}
+.ds-icon-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.625rem;padding:1.25rem 0.5rem;background:#070707;text-align:center;min-width:0}
+.ds-icon-cell .ds-label{letter-spacing:0.04rem;text-transform:none;word-break:break-all}
+.ds-icon-sizes{display:flex;flex-wrap:wrap;align-items:flex-end;gap:1.75rem}
+.ds-icon-sizes > div{display:flex;flex-direction:column;align-items:center;gap:0.5rem}
+
+/* =====================================================================
+   ESTADOS ESTÁTICOS — cópias EXATAS das regras :hover, :focus,
+   :focus-visible, :active e .group:hover geradas pelo Tailwind no
+   original. Somente o seletor muda; nenhum valor foi alterado.
+   (O original não possui regras :disabled além de cursor:default.)
+   ===================================================================== */
+/* :hover */
+.is-hover.hover\:-translate-y-0\.5{--tw-translate-y:-0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.is-hover.hover\:-translate-y-1{--tw-translate-y:-0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.is-hover.hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.is-hover.hover\:border-\[\#FF6400\]\/40{border-color:rgb(255 100 0 / 0.4)}
+.is-hover.hover\:border-\[\#FF6400\]\/70{border-color:rgb(255 100 0 / 0.7)}
+.is-hover.hover\:border-white\/20{border-color:rgb(255 255 255 / 0.2)}
+.is-hover.hover\:border-\[\#FF6400\]\/30{border-color:rgb(255 100 0 / 0.3)}
+.is-hover.hover\:border-\[\#FFA500\]\/50{border-color:rgb(255 165 0 / 0.5)}
+.is-hover.hover\:border-\[\#FFA500\]\/60{border-color:rgb(255 165 0 / 0.6)}
+.is-hover.hover\:bg-\[\#4D2915\]{--tw-bg-opacity:1;background-color:rgb(77 41 21 / var(--tw-bg-opacity, 1))}
+.is-hover.hover\:bg-\[\#FF6400\]\/10{background-color:rgb(255 100 0 / 0.1)}
+.is-hover.hover\:bg-\[\#FF6400\]\/15{background-color:rgb(255 100 0 / 0.15)}
+.is-hover.hover\:bg-white\/5{background-color:rgb(255 255 255 / 0.05)}
+.is-hover.hover\:bg-\[\#FFA500\]{--tw-bg-opacity:1;background-color:rgb(255 165 0 / var(--tw-bg-opacity, 1))}
+.is-hover.hover\:bg-white\/\[0\.08\]{background-color:rgb(255 255 255 / 0.08)}
+.is-hover.hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}
+.is-hover.hover\:text-\[\#030303\]{--tw-text-opacity:1;color:rgb(3 3 3 / var(--tw-text-opacity, 1))}
+.is-hover.hover\:text-zinc-300{--tw-text-opacity:1;color:rgb(212 212 216 / var(--tw-text-opacity, 1))}
+.is-hover.hover\:opacity-100{opacity:1}
+/* .group:hover */
+.group.is-hover .group-hover\:translate-x-1{--tw-translate-x:0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.group.is-hover .group-hover\:translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.group.is-hover .group-hover\:translate-y-1{--tw-translate-y:0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.group.is-hover .group-hover\:-translate-y-1{--tw-translate-y:-0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.group.is-hover .group-hover\:rotate-6{--tw-rotate:6deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+/* :focus */
+.is-focus.focus\:border-\[\#FF6400\]\/60{border-color:rgb(255 100 0 / 0.6)}
+.is-focus.focus\:bg-\[\#FF6400\]\/5{background-color:rgb(255 100 0 / 0.05)}
+.is-focus.focus\:ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}
+.is-focus.focus\:ring-\[\#FF6400\]\/20{--tw-ring-color:rgb(255 100 0 / 0.2)}
+/* :focus-visible */
+.is-focus.focus-visible\:outline-none{outline:2px solid transparent;outline-offset:2px}
+.is-focus.focus-visible\:ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}
+.is-focus.focus-visible\:ring-\[\#FFA500\]\/50{--tw-ring-color:rgb(255 165 0 / 0.5)}
+.is-focus.focus-visible\:ring-\[\#FFA500\]\/60{--tw-ring-color:rgb(255 165 0 / 0.6)}
+.is-focus.focus-visible\:ring-white\/30{--tw-ring-color:rgb(255 255 255 / 0.3)}
+/* :active (declarado depois de :hover, como no original) */
+.is-active.active\:translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.is-active.active\:scale-\[0\.99\]{--tw-scale-x:0.99;--tw-scale-y:0.99;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+</style>
+</head>
+
+<body class="bg-[#030303] text-white antialiased overflow-x-hidden selection:bg-[#FF6400]/30" style="font-family: Newsreader, Georgia, serif;">
+  <canvas id="hero-canvas" class="fixed inset-0 z-0 h-full w-full pointer-events-none"></canvas>
+
+  <div class="fixed inset-0 z-0 pointer-events-none opacity-[0.16]" style="background-image: linear-gradient(135deg, rgba(255,255,255,0.08) 0.0625rem, transparent 0.0625rem); background-size: 1.25rem 1.25rem;"></div>
+  <div class="fixed inset-0 z-0 pointer-events-none" style="background: radial-gradient(circle at 50% 0%, rgba(255,100,0,0.17), transparent 34rem), radial-gradient(circle at 85% 28%, rgba(255,165,0,0.06), transparent 28rem), linear-gradient(180deg, rgba(3,3,3,0.2), #030303 82%);"></div>
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[#030303]">Pular para o conteúdo</a>
+
+  <!-- ============ NAVEGAÇÃO (estilo original) ============ -->
+  <header class="fixed left-0 right-0 top-5 z-50 px-4">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between rounded-xl border border-white/10 bg-[#070707]/80 p-1.5 backdrop-blur-xl shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]" aria-label="Navegação do design system">
+      <a href="#home" class="magnetic group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 transition-all duration-300 hover:border-[#FF6400]/40 hover:bg-[#FF6400]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50">
+        <span class="grid size-7 place-items-center rounded-md bg-[#FF6400] text-xs font-semibold tracking-tighter text-white" style="font-family: 'JetBrains Mono', monospace;">NX</span>
+        <span class="text-sm font-medium tracking-tight text-white">Nexus</span>
+      </a>
+
+      <div class="hidden items-center gap-1 md:flex">
+        <a href="#tipografia" class="rounded-lg px-3 py-2 text-xs font-medium text-orange-100 bg-[#FF6400]/10 border border-[#FF6400]/20 transition-all duration-300 hover:bg-[#FF6400]/15" style="font-family: 'JetBrains Mono', monospace;">Tipografia</a>
+        <a href="#cores" class="rounded-lg px-3 py-2 text-xs font-medium text-zinc-400 transition-all duration-300 hover:bg-white/5 hover:text-white" style="font-family: 'JetBrains Mono', monospace;">Cores</a>
+        <a href="#componentes" class="rounded-lg px-3 py-2 text-xs font-medium text-zinc-400 transition-all duration-300 hover:bg-white/5 hover:text-white" style="font-family: 'JetBrains Mono', monospace;">Componentes</a>
+        <a href="#layout" class="rounded-lg px-3 py-2 text-xs font-medium text-zinc-400 transition-all duration-300 hover:bg-white/5 hover:text-white" style="font-family: 'JetBrains Mono', monospace;">Layout</a>
+        <a href="#movimento" class="rounded-lg px-3 py-2 text-xs font-medium text-zinc-400 transition-all duration-300 hover:bg-white/5 hover:text-white" style="font-family: 'JetBrains Mono', monospace;">Movimento</a>
+        <a href="#icones" class="rounded-lg px-3 py-2 text-xs font-medium text-zinc-400 transition-all duration-300 hover:bg-white/5 hover:text-white" style="font-family: 'JetBrains Mono', monospace;">Ícones</a>
+      </div>
+
+      <a href="#componentes" class="magnetic group inline-flex items-center gap-2 rounded-lg border border-[#66381D] bg-[#331B0E] px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-[#FF6400]/70 hover:bg-[#4D2915] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50">
+        Ver componentes
+        <iconify-icon icon="solar:arrow-right-linear" class="text-base text-[#FFA500] transition-transform duration-300 group-hover:translate-x-1" stroke-width="1.5"></iconify-icon>
+      </a>
+    </nav>
+  </header>
+
+  <main id="main" class="relative z-10">
+
+    <!-- ============ 0) HERO — clone exato, texto adaptado ============ -->
+    <section id="home" class="relative flex min-h-screen items-center px-4 pt-28 pb-16">
+      <div class="mx-auto grid w-full max-w-6xl items-end gap-8 rounded-2xl border border-white/10 bg-[#030303]/35 p-4 backdrop-blur-[0.125rem] sm:p-6 lg:grid-cols-[1.05fr_0.95fr] lg:p-8 shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]">
+        <span class="absolute left-3 top-3 h-6 w-6 border-l border-t border-[#FF6400]/60"></span>
+        <span class="absolute right-3 top-3 h-6 w-6 border-r border-t border-[#FF6400]/60"></span>
+        <span class="absolute bottom-3 left-3 h-6 w-6 border-b border-l border-[#FF6400]/60"></span>
+        <span class="absolute bottom-3 right-3 h-6 w-6 border-b border-r border-[#FF6400]/60"></span>
+
+        <div class="py-8 sm:py-12 lg:py-20">
+          <div class="reveal mb-8 inline-flex items-center gap-2 rounded-full border border-[#FF6400]/20 bg-[#FF6400]/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18rem] text-orange-100" style="font-family: 'JetBrains Mono', monospace;">
+            <span class="size-1.5 rounded-full bg-[#FFA500]"></span>
+            Design system vivo do Nexus
+          </div>
+
+          <h1 class="masked-title max-w-4xl text-5xl font-medium leading-[0.98] tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">Componentes que antecipam cada interface</h1>
+
+          <p class="reveal mt-7 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg">
+            Tipografia, cores, superfícies, componentes e movimento extraídos da landing page Nexus — renderizados com as mesmas classes, scripts e animações do original.
+          </p>
+
+          <div class="reveal mt-10 flex flex-col gap-3 sm:flex-row">
+            <a href="#componentes" class="magnetic group relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:translate-y-0">
+              <span class="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 group-hover:translate-y-0"></span>
+              <span class="relative flex items-center gap-2">
+                Explorar componentes
+                <iconify-icon icon="solar:code-square-linear" class="text-lg transition-transform duration-300 group-hover:rotate-6" stroke-width="1.5"></iconify-icon>
+              </span>
+            </a>
+            <a href="#movimento" class="magnetic group inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 active:translate-y-0">
+              Ver o movimento
+              <iconify-icon icon="solar:alt-arrow-down-linear" class="text-lg text-[#FFA500] transition-transform duration-300 group-hover:translate-y-1" stroke-width="1.5"></iconify-icon>
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal relative min-h-[28rem] overflow-hidden rounded-xl border border-white/10 bg-[#0A0A0A]/75 p-3 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]">
+          <div class="flex items-center justify-between border-b border-white/10 px-3 py-3">
+            <div class="flex items-center gap-2">
+              <span class="size-2.5 rounded-full bg-[#FF6400]"></span>
+              <span class="size-2.5 rounded-full bg-[#FFA500]/70"></span>
+              <span class="size-2.5 rounded-full bg-white/20"></span>
+            </div>
+            <span class="text-xs font-medium uppercase tracking-[0.16rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Inventário ao vivo</span>
+          </div>
+
+          <div class="space-y-3 p-3">
+            <div class="rounded-lg border border-white/10 bg-white/[0.03] p-4">
+              <div class="mb-3 flex items-center justify-between text-xs text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">
+                <span>ds.inventory</span>
+                <span>6 seções</span>
+              </div>
+              <div class="flex items-center gap-3 rounded-lg border border-[#FF6400]/20 bg-[#FF6400]/10 px-3 py-3">
+                <iconify-icon icon="solar:minimalistic-magnifer-linear" class="text-2xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>
+                <p class="text-lg text-white">“serifada escura com acento laranja”</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="rounded-lg border border-white/10 bg-[#120B07]/80 p-4">
+                <p class="text-xs uppercase tracking-[0.16rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Fontes</p>
+                <p class="mt-3 text-3xl font-medium tracking-tight">2</p>
+                <p class="mt-1 text-sm text-zinc-500">Newsreader + Mono</p>
+              </div>
+              <div class="rounded-lg border border-white/10 bg-[#120B07]/80 p-4">
+                <p class="text-xs uppercase tracking-[0.16rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Acentos</p>
+                <p class="mt-3 text-3xl font-medium tracking-tight">2×</p>
+                <p class="mt-1 text-sm text-zinc-500">#FF6400 e #FFA500</p>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <div class="result-card group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] p-3 transition-all duration-300 hover:border-[#FF6400]/30 hover:bg-[#FF6400]/10">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&amp;fit=crop&amp;w=240&amp;q=80" alt="Jaqueta impermeável" class="size-14 rounded-md object-cover">
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium text-white">Botão primário magnético</p>
+                  <p class="text-xs text-zinc-500">Estados: hover, focus, active</p>
+                </div>
+                <span class="text-xs text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">0.98</span>
+              </div>
+              <div class="result-card group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] p-3 transition-all duration-300 hover:border-[#FF6400]/30 hover:bg-[#FF6400]/10">
+                <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&amp;fit=crop&amp;w=240&amp;q=80" alt="Jaqueta técnica laranja" class="size-14 rounded-md object-cover">
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium text-white">Card de resultado</p>
+                  <p class="text-xs text-zinc-500">Estados: borda, fundo, entrada</p>
+                </div>
+                <span class="text-xs text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">0.94</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2) TIPOGRAFIA ============ -->
+    <section id="tipografia" class="px-4 py-8">
+      <div class="frame reveal relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-[#050505]/75 p-6 sm:p-8 lg:p-10">
+        <span class="absolute left-3 top-3 h-5 w-5 border-l border-t border-[#FF6400]/50"></span>
+        <span class="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-[#FF6400]/50"></span>
+        <div class="mb-10 max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">01 / Tipografia</p>
+          <h2 class="mt-5 text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Serifada editorial, mono para dados.</h2>
+          <p class="mt-5 text-base leading-7 text-zinc-400">Newsreader (400/500/600) em todo o texto corrido e títulos; JetBrains Mono (400/500/600) para rótulos, navegação e números técnicos. Os pesos usados nos títulos são <span class="ds-code">font-medium</span> (500) — o site não usa negrito 700.</p>
+        </div>
+
+        <div class="ds-type-list">
+          <div class="ds-type-row">
+            <span class="ds-label">Heading 1</span>
+            <h1 class="masked-title max-w-4xl text-5xl font-medium leading-[0.98] tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">Busca inteligente</h1>
+            <span class="ds-spec"><b>48px / 47px</b><br>sm 60px / 59px · md 72px / 71px<br>lg 96px / 94px · 500 · -0.025em</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Heading 2</span>
+            <h2 class="text-4xl font-medium leading-tight tracking-tight text-white sm:text-5xl">Concretos ganhos, não IA abstrata.</h2>
+            <span class="ds-spec"><b>36px / 45px</b><br>sm 48px / 60px · 500 · -0.025em</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Heading 3</span>
+            <h2 class="text-2xl font-medium tracking-tight text-white sm:text-3xl">Feito para superfícies de busca sérias.</h2>
+            <span class="ds-spec"><b>24px / 32px</b><br>sm 30px / 36px · 500 · -0.025em</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Heading 3 · cartão</span>
+            <h3 class="text-3xl font-medium tracking-tight">Expansão semântica</h3>
+            <span class="ds-spec"><b>30px / 36px</b><br>500 · -0.025em · .pin-card</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Heading 4</span>
+            <h3 class="text-2xl font-medium tracking-tight">Radar de intenção</h3>
+            <span class="ds-spec"><b>24px / 32px</b><br>500 · -0.025em · cards bento, preços</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Medium L</span>
+            <h3 class="text-xl font-medium">Caminhos mais rápidos</h3>
+            <span class="ds-spec"><b>20px / 28px</b><br>500 · células de recurso</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Medium M</span>
+            <h3 class="text-lg font-medium">Maya Chen</h3>
+            <span class="ds-spec"><b>18px / 28px</b><br>500 · nomes da equipe</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Medium S</span>
+            <p class="text-sm font-medium">Ari Patel</p>
+            <span class="ds-spec"><b>14px / 20px</b><br>500 · botões, legendas</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Número L</span>
+            <p class="text-5xl font-medium tracking-tight">24ms</p>
+            <span class="ds-spec"><b>48px / 48px</b><br>500 · -0.025em · métricas, preços</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Número M</span>
+            <p class="text-3xl font-medium tracking-tight">92%</p>
+            <span class="ds-spec"><b>30px / 36px</b><br>500 · -0.025em · stats do hero</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Paragraph</span>
+            <p class="text-lg leading-8 text-zinc-300">Cada busca é um sinal de contexto, restrição, preferência e momento.</p>
+            <span class="ds-spec"><b>18px / 32px</b><br>400 · zinc-300 · também em blockquote</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Regular L</span>
+            <p class="text-base leading-7 text-zinc-400 sm:text-lg">Integre descoberta rápida e sensível ao contexto em toda a plataforma.</p>
+            <span class="ds-spec"><b>16px / 28px</b><br>sm 18px / 28px (lead do hero)<br>400 · zinc-400</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Regular M</span>
+            <p class="text-sm leading-6 text-zinc-400">Identifique necessidades inferidas a partir de frases parciais.</p>
+            <span class="ds-spec"><b>14px / 24px</b><br>400 · zinc-400</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Regular S</span>
+            <p class="text-xs text-zinc-500">Correspondência: membrana, calor, trilha</p>
+            <span class="ds-spec"><b>12px / 16px</b><br>400 · zinc-500</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Mono · Eyebrow</span>
+            <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">03 / Capacidades</p>
+            <span class="ds-spec"><b>12px / 16px</b><br>JetBrains Mono 600 · 0.18rem · #FFA500</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Mono · Label</span>
+            <p class="text-xs uppercase tracking-[0.16rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Latência mediana</p>
+            <span class="ds-spec"><b>12px / 16px</b><br>JetBrains Mono 400 · 0.16rem · zinc-500</span>
+          </div>
+          <div class="ds-type-row">
+            <span class="ds-label">Mono · Nav</span>
+            <p class="text-xs font-medium text-zinc-400" style="font-family: 'JetBrains Mono', monospace;">Plataforma</p>
+            <span class="ds-spec"><b>12px / 16px</b><br>JetBrains Mono 500 · zinc-400</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3) CORES E SUPERFÍCIES ============ -->
+    <section id="cores" class="px-4 py-8">
+      <div class="frame reveal relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-[#050505]/75 p-6 sm:p-8 lg:p-10">
+        <span class="absolute left-3 top-3 h-5 w-5 border-l border-t border-white/20"></span>
+        <span class="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-white/20"></span>
+        <div class="mb-10 max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">02 / Cores e superfícies</p>
+          <h2 class="mt-5 text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Preto quente, laranja como sinal.</h2>
+          <p class="mt-5 text-base leading-7 text-zinc-400">O site não declara variáveis CSS próprias: todas as cores são valores arbitrários do Tailwind (ex.: <span class="ds-code">bg-[#FF6400]</span>). Cada amostra mostra a classe original em vez do nome de variável.</p>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Fundos e superfícies</span></div>
+          <div class="ds-swatches">
+            <div class="ds-swatch"><div class="ds-chip bg-[#030303]"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#030303</span><span class="ds-meta">bg-[#030303] · sem variável</span><span class="ds-meta">Fundo da página, preenchimento do canvas, texto do botão primário no hover</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-[#050505]/75 border border-white/10"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">#050505 · 70/75/80%</span><span class="ds-meta">bg-[#050505]/75</span><span class="ds-meta">Molduras de seção (.frame) e rodapé (/80)</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip bg-[#070707]"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#070707</span><span class="ds-meta">bg-[#070707] · /80 · /95</span><span class="ds-meta">Células de grids com divisória, navegação (/80), story (/95)</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip bg-[#090909]"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#090909</span><span class="ds-meta">bg-[#090909]</span><span class="ds-meta">Cards de preço, depoimentos, células de recurso e jornada</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-[#0A0A0A]/75 border border-white/10"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">#0A0A0A · 75%</span><span class="ds-meta">bg-[#0A0A0A]/75</span><span class="ds-meta">Painel "trace" do hero</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip bg-[#0B0B0B]"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#0B0B0B</span><span class="ds-meta">bg-[#0B0B0B]</span><span class="ds-meta">Cards bento, primeiro .pin-card</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip bg-[#120B07]"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#120B07</span><span class="ds-meta">bg-[#120B07] · /80</span><span class="ds-meta">Card bento quente, segundo .pin-card, stats do hero (/80)</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip bg-[#331B0E]"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#331B0E</span><span class="ds-meta">bg-[#331B0E]</span><span class="ds-meta">Fundo do CTA da navegação</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip bg-[#4D2915]"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#4D2915</span><span class="ds-meta">bg-[#4D2915] · /60 · /65 · /70</span><span class="ds-meta">Card de destaque, plano Scale, passo final da jornada, hover do CTA da nav</span></div></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Acentos</span></div>
+          <div class="ds-swatches">
+            <div class="ds-swatch"><div class="ds-chip bg-[#FF6400]"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FF6400 · primária</span><span class="ds-meta">bg-[#FF6400] · /5 · /10 · /15 · /20 · /30 · /40 · /50 · /60 · /70</span><span class="ds-meta">Botão primário, marca NX, cantos das molduras, seleção de texto (/30)</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip bg-[#FFA500]"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FFA500 · acento</span><span class="ds-meta">bg-[#FFA500] · text-[#FFA500] · /10 · /30 · /50 · /60 · /70</span><span class="ds-meta">Ícones, eyebrows, hover do botão primário, ponto de status</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-c-66381D"></div><div class="ds-swatch-body"><span class="ds-swatch-name">#66381D</span><span class="ds-meta">border-[#66381D]</span><span class="ds-meta">Borda do CTA da navegação</span></div></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Texto</span></div>
+          <div class="ds-swatches">
+            <div class="ds-swatch"><div class="ds-chip"><span class="ds-aa text-white">Aa</span></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FFFFFF</span><span class="ds-meta">text-white</span><span class="ds-meta">Títulos, botões, valores</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><span class="ds-aa text-zinc-300">Aa</span></div><div class="ds-swatch-body"><span class="ds-swatch-name">#D4D4D8</span><span class="ds-meta">text-zinc-300</span><span class="ds-meta">Parágrafos de destaque, citações, itens de lista</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><span class="ds-aa text-zinc-400">Aa</span></div><div class="ds-swatch-body"><span class="ds-swatch-name">#A1A1AA</span><span class="ds-meta">text-zinc-400</span><span class="ds-meta">Corpo de texto, links da nav, logos</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><span class="ds-aa text-zinc-500">Aa</span></div><div class="ds-swatch-body"><span class="ds-swatch-name">#71717A</span><span class="ds-meta">text-zinc-500</span><span class="ds-meta">Rótulos mono, legendas, títulos do rodapé</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><span class="ds-aa text-zinc-600">Aa</span></div><div class="ds-swatch-body"><span class="ds-swatch-name">#52525B</span><span class="ds-meta">text-zinc-600 · placeholder:text-zinc-600</span><span class="ds-meta">Placeholders, linha legal do rodapé</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip bg-[#4D2915]"><span class="ds-aa text-orange-100">Aa</span></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FFEDD5</span><span class="ds-meta">text-orange-100 · /60 · /70 · /75</span><span class="ds-meta">Texto sobre superfícies quentes, link ativo da nav</span></div></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Camadas translúcidas</span></div>
+          <div class="ds-swatches">
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-white/[0.03]"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">white / 3%</span><span class="ds-meta">bg-white/[0.03]</span><span class="ds-meta">Cards internos, itens de inclusão, link da marca</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-white/[0.04]"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">white / 4%</span><span class="ds-meta">bg-white/[0.04]</span><span class="ds-meta">Inputs, botões secundários, result cards</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-white/5"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">white / 5%</span><span class="ds-meta">hover:bg-white/5</span><span class="ds-meta">Hover dos links da navegação</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-white/[0.08]"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">white / 8%</span><span class="ds-meta">hover:bg-white/[0.08]</span><span class="ds-meta">Hover dos botões secundários</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-white/10"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">white / 10%</span><span class="ds-meta">bg-white/10 (gap-px)</span><span class="ds-meta">Fundo que vira divisória de 1px nos grids</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-[#FF6400]/10"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FF6400 / 10%</span><span class="ds-meta">bg-[#FF6400]/10</span><span class="ds-meta">Pill do hero, campo de consulta, hover de células</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-[#FF6400]/5"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FF6400 / 5%</span><span class="ds-meta">focus:bg-[#FF6400]/5</span><span class="ds-meta">Fundo do input em foco</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset bg-[#FFA500]/10"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FFA500 / 10%</span><span class="ds-meta">bg-[#FFA500]/10</span><span class="ds-meta">Chip "Popular" do plano Scale</span></div></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Bordas e divisores</span></div>
+          <div class="ds-swatches">
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset border border-white/10"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">white / 10%</span><span class="ds-meta">border-white/10</span><span class="ds-meta">Borda padrão de todos os cards, molduras e inputs</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset border border-white/20"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">white / 20%</span><span class="ds-meta">border-white/20</span><span class="ds-meta">Cantos neutros das molduras, hover de cards neutros</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset border border-[#FF6400]/20"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FF6400 / 20%</span><span class="ds-meta">border-[#FF6400]/20 · /25</span><span class="ds-meta">Pill do hero, link ativo, card de métrica</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset border border-[#FF6400]/40"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FF6400 / 40%</span><span class="ds-meta">border-[#FF6400]/40</span><span class="ds-meta">Botão primário, plano Scale, hover de cards bento</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset border border-[#FF6400]/60"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FF6400 / 50–60%</span><span class="ds-meta">border-[#FF6400]/50 · /60</span><span class="ds-meta">Cantos laranja das molduras, input em foco</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-chip-inset border border-[#FFA500]/30"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">#FFA500 / 30–60%</span><span class="ds-meta">border-[#FFA500]/30 · /40 · /50 · /60</span><span class="ds-meta">Chip Popular, botão Scale, hover de cards quentes</span></div></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Gradientes, overlays e vidro</span></div>
+          <div class="ds-swatches">
+            <div class="ds-swatch"><div class="ds-chip ds-grad-overlay"></div><div class="ds-swatch-body"><span class="ds-swatch-name">Brilho de topo</span><span class="ds-meta">radial-gradient(circle at 50% 0%, rgba(255,100,0,0.17), transparent 34rem), radial-gradient(circle at 85% 28%, rgba(255,165,0,0.06), transparent 28rem), linear-gradient(180deg, rgba(3,3,3,0.2), #030303 82%)</span><span class="ds-meta">Overlay fixo sobre o canvas, em toda a página</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-grad-grid opacity-[0.16]"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">Trama diagonal</span><span class="ds-meta">linear-gradient(135deg, rgba(255,255,255,0.08) 0.0625rem, transparent 0.0625rem) · 1.25rem · opacity 0.16</span><span class="ds-meta">Textura fixa de fundo da página</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"></div><div class="ds-swatch-body"><span class="ds-swatch-name">Campo de pontos (canvas)</span><span class="ds-meta">#hero-canvas · arco de pontos 6px · rgb laranja→branco · composite "lighter"</span><span class="ds-meta">Fundo animado fixo — esta amostra é transparente e mostra o canvas atrás</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-glass-under"><span></span><span></span><span></span><span></span></div><div class="ds-chip-inset bg-[#070707]/80 backdrop-blur-xl border border-white/10"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">Vidro da navegação</span><span class="ds-meta">bg-[#070707]/80 · backdrop-blur-xl (24px)</span><span class="ds-meta">Barra de navegação fixa</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><div class="ds-glass-under"><span></span><span></span><span></span><span></span></div><div class="ds-chip-inset bg-[#030303]/35 backdrop-blur-[0.125rem] border border-white/10"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">Vidro do hero</span><span class="ds-meta">bg-[#030303]/35 · backdrop-blur-[0.125rem]</span><span class="ds-meta">Moldura principal do hero</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip ds-chip-ground"><span class="ds-aa text-white bg-[#FF6400]/30">Seleção</span></div><div class="ds-swatch-body"><span class="ds-swatch-name">Seleção de texto</span><span class="ds-meta">selection:bg-[#FF6400]/30</span><span class="ds-meta">::selection no body (selecione um texto para testar)</span></div></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Raios e sombras</span></div>
+          <div class="ds-swatches">
+            <div class="ds-swatch"><div class="ds-chip"><div class="ds-radius rounded-md"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">6px</span><span class="ds-meta">rounded-md</span><span class="ds-meta">Marca NX, miniaturas de produto</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><div class="ds-radius rounded-lg"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">8px</span><span class="ds-meta">rounded-lg</span><span class="ds-meta">Botões, inputs, links da nav, result cards</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><div class="ds-radius rounded-xl"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">12px</span><span class="ds-meta">rounded-xl</span><span class="ds-meta">Navegação, cards, grids internos, imagens</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><div class="ds-radius rounded-2xl"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">16px</span><span class="ds-meta">rounded-2xl</span><span class="ds-meta">Molduras de seção, hero, rodapé</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><div class="ds-radius rounded-full"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">9999px</span><span class="ds-meta">rounded-full</span><span class="ds-meta">Pills, chips, avatares, pontos</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><div class="ds-shadow-box shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">Sombra da nav</span><span class="ds-meta">0 2px 3px -1px rgba(0,0,0,.1), 0 1px 0 0 rgba(25,28,33,.02), 0 0 0 1px rgba(25,28,33,.08)</span><span class="ds-meta">Barra de navegação</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><div class="ds-shadow-box shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">Sombra em camadas</span><span class="ds-meta">6 camadas rgba(0,0,0,.06) de 1px a 24px</span><span class="ds-meta">Painel trace do hero, plano Scale</span></div></div>
+            <div class="ds-swatch"><div class="ds-chip"><div class="ds-shadow-box shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]"></div></div><div class="ds-swatch-body"><span class="ds-swatch-name">Sombra longa</span><span class="ds-meta">6 camadas de 2.8px a 100px · alpha .034→.12</span><span class="ds-meta">Moldura do hero</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4) COMPONENTES DE UI ============ -->
+    <section id="componentes" class="px-4 py-8">
+      <div class="frame reveal relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-[#050505]/75 p-6 sm:p-8 lg:p-10">
+        <span class="absolute left-3 top-3 h-5 w-5 border-l border-t border-[#FF6400]/50"></span>
+        <span class="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-[#FF6400]/50"></span>
+        <div class="mb-10 max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">03 / Componentes</p>
+          <h2 class="mt-5 text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Cada estado, lado a lado.</h2>
+          <p class="mt-5 text-base leading-7 text-zinc-400">Estados estáticos usam <span class="ds-code">.is-hover</span>, <span class="ds-code">.is-focus</span> e <span class="ds-code">.is-active</span> (cópias exatas das regras originais). A caixa com borda laranja é a versão interativa real. O original não define estados <span class="ds-code">:disabled</span> nem de erro, por isso eles não aparecem.</p>
+        </div>
+
+        <!-- Botão primário -->
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-block-title">Botão primário</span><span class="ds-meta">.magnetic · overlay branco sobe no hover · ícone gira 6° · 300ms</span></div>
+          <div class="ds-states">
+            <div class="ds-state"><span class="ds-label">Padrão</span>
+              <a href="#componentes" class="magnetic group relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:translate-y-0"><span class="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 group-hover:translate-y-0"></span><span class="relative flex items-center gap-2">Começar <iconify-icon icon="solar:code-square-linear" class="text-lg transition-transform duration-300 group-hover:rotate-6" stroke-width="1.5"></iconify-icon></span></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Hover</span>
+              <a href="#componentes" class="is-hover magnetic group relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:translate-y-0"><span class="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 group-hover:translate-y-0"></span><span class="relative flex items-center gap-2">Começar <iconify-icon icon="solar:code-square-linear" class="text-lg transition-transform duration-300 group-hover:rotate-6" stroke-width="1.5"></iconify-icon></span></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Active</span>
+              <a href="#componentes" class="is-hover is-active magnetic group relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:translate-y-0"><span class="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 group-hover:translate-y-0"></span><span class="relative flex items-center gap-2">Começar <iconify-icon icon="solar:code-square-linear" class="text-lg transition-transform duration-300 group-hover:rotate-6" stroke-width="1.5"></iconify-icon></span></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Focus</span>
+              <a href="#componentes" class="is-focus magnetic group relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:translate-y-0"><span class="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 group-hover:translate-y-0"></span><span class="relative flex items-center gap-2">Começar <iconify-icon icon="solar:code-square-linear" class="text-lg transition-transform duration-300 group-hover:rotate-6" stroke-width="1.5"></iconify-icon></span></a>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Interativo</span>
+              <a href="#componentes" class="magnetic group relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:translate-y-0"><span class="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 group-hover:translate-y-0"></span><span class="relative flex items-center gap-2">Começar <iconify-icon icon="solar:code-square-linear" class="text-lg transition-transform duration-300 group-hover:rotate-6" stroke-width="1.5"></iconify-icon></span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botão secundário -->
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-block-title">Botão secundário</span><span class="ds-meta">fundo white/4% → 8% · borda white/10 → 20% · seta desce 4px</span></div>
+          <div class="ds-states">
+            <div class="ds-state"><span class="ds-label">Padrão</span>
+              <a href="#componentes" class="magnetic group inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 active:translate-y-0">Ver a jornada <iconify-icon icon="solar:alt-arrow-down-linear" class="text-lg text-[#FFA500] transition-transform duration-300 group-hover:translate-y-1" stroke-width="1.5"></iconify-icon></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Hover</span>
+              <a href="#componentes" class="is-hover magnetic group inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 active:translate-y-0">Ver a jornada <iconify-icon icon="solar:alt-arrow-down-linear" class="text-lg text-[#FFA500] transition-transform duration-300 group-hover:translate-y-1" stroke-width="1.5"></iconify-icon></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Active</span>
+              <a href="#componentes" class="is-hover is-active magnetic group inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 active:translate-y-0">Ver a jornada <iconify-icon icon="solar:alt-arrow-down-linear" class="text-lg text-[#FFA500] transition-transform duration-300 group-hover:translate-y-1" stroke-width="1.5"></iconify-icon></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Focus</span>
+              <a href="#componentes" class="is-focus magnetic group inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 active:translate-y-0">Ver a jornada <iconify-icon icon="solar:alt-arrow-down-linear" class="text-lg text-[#FFA500] transition-transform duration-300 group-hover:translate-y-1" stroke-width="1.5"></iconify-icon></a>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Interativo</span>
+              <a href="#componentes" class="magnetic group inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 active:translate-y-0">Ver a jornada <iconify-icon icon="solar:alt-arrow-down-linear" class="text-lg text-[#FFA500] transition-transform duration-300 group-hover:translate-y-1" stroke-width="1.5"></iconify-icon></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA da navegação -->
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-block-title">CTA da navegação</span><span class="ds-meta">#331B0E → #4D2915 · borda #66381D → #FF6400/70 · seta avança 4px</span></div>
+          <div class="ds-states">
+            <div class="ds-state"><span class="ds-label">Padrão</span>
+              <a href="#componentes" class="magnetic group inline-flex items-center gap-2 rounded-lg border border-[#66381D] bg-[#331B0E] px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-[#FF6400]/70 hover:bg-[#4D2915] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50">Pedir demo <iconify-icon icon="solar:arrow-right-linear" class="text-base text-[#FFA500] transition-transform duration-300 group-hover:translate-x-1" stroke-width="1.5"></iconify-icon></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Hover</span>
+              <a href="#componentes" class="is-hover magnetic group inline-flex items-center gap-2 rounded-lg border border-[#66381D] bg-[#331B0E] px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-[#FF6400]/70 hover:bg-[#4D2915] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50">Pedir demo <iconify-icon icon="solar:arrow-right-linear" class="text-base text-[#FFA500] transition-transform duration-300 group-hover:translate-x-1" stroke-width="1.5"></iconify-icon></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Focus</span>
+              <a href="#componentes" class="is-focus magnetic group inline-flex items-center gap-2 rounded-lg border border-[#66381D] bg-[#331B0E] px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-[#FF6400]/70 hover:bg-[#4D2915] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50">Pedir demo <iconify-icon icon="solar:arrow-right-linear" class="text-base text-[#FFA500] transition-transform duration-300 group-hover:translate-x-1" stroke-width="1.5"></iconify-icon></a>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Interativo</span>
+              <a href="#componentes" class="magnetic group inline-flex items-center gap-2 rounded-lg border border-[#66381D] bg-[#331B0E] px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-[#FF6400]/70 hover:bg-[#4D2915] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50">Pedir demo <iconify-icon icon="solar:arrow-right-linear" class="text-base text-[#FFA500] transition-transform duration-300 group-hover:translate-x-1" stroke-width="1.5"></iconify-icon></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botões de plano -->
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-block-title">Botões de plano e envio</span><span class="ds-meta">largura total · neutro, destaque e envio (active:scale-[0.99])</span></div>
+          <div class="ds-states">
+            <div class="ds-state"><span class="ds-label">Neutro · padrão</span>
+              <a href="#componentes" class="magnetic mt-8 inline-flex w-full items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium transition-all duration-300 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30">Começar Launch</a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Neutro · hover</span>
+              <a href="#componentes" class="is-hover magnetic mt-8 inline-flex w-full items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium transition-all duration-300 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30">Começar Launch</a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Neutro · focus</span>
+              <a href="#componentes" class="is-focus magnetic mt-8 inline-flex w-full items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium transition-all duration-300 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30">Começar Launch</a>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Neutro · interativo</span>
+              <a href="#componentes" class="magnetic mt-8 inline-flex w-full items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium transition-all duration-300 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30">Começar Launch</a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Destaque · padrão</span>
+              <a href="#componentes" class="magnetic mt-8 inline-flex w-full items-center justify-center rounded-lg border border-[#FFA500]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60">Escolher Scale</a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Destaque · hover</span>
+              <a href="#componentes" class="is-hover magnetic mt-8 inline-flex w-full items-center justify-center rounded-lg border border-[#FFA500]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60">Escolher Scale</a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Destaque · focus</span>
+              <a href="#componentes" class="is-focus magnetic mt-8 inline-flex w-full items-center justify-center rounded-lg border border-[#FFA500]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60">Escolher Scale</a>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Destaque · interativo</span>
+              <a href="#componentes" class="magnetic mt-8 inline-flex w-full items-center justify-center rounded-lg border border-[#FFA500]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60">Escolher Scale</a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Envio · padrão</span>
+              <button type="button" class="magnetic group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:scale-[0.99]">Enviar <iconify-icon icon="solar:plain-linear" class="text-lg transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" stroke-width="1.5"></iconify-icon></button>
+            </div>
+            <div class="ds-state"><span class="ds-label">Envio · hover</span>
+              <button type="button" class="is-hover magnetic group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:scale-[0.99]">Enviar <iconify-icon icon="solar:plain-linear" class="text-lg transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" stroke-width="1.5"></iconify-icon></button>
+            </div>
+            <div class="ds-state"><span class="ds-label">Envio · active</span>
+              <button type="button" class="is-hover is-active magnetic group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:scale-[0.99]">Enviar <iconify-icon icon="solar:plain-linear" class="text-lg transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" stroke-width="1.5"></iconify-icon></button>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Envio · interativo</span>
+              <button type="button" class="magnetic group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:scale-[0.99]">Enviar <iconify-icon icon="solar:plain-linear" class="text-lg transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" stroke-width="1.5"></iconify-icon></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navegação -->
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-block-title">Navegação</span><span class="ds-meta">marca, links mono e links do rodapé</span></div>
+          <div class="ds-states">
+            <div class="ds-state"><span class="ds-label">Marca · padrão</span>
+              <a href="#home" class="magnetic group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 transition-all duration-300 hover:border-[#FF6400]/40 hover:bg-[#FF6400]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50"><span class="grid size-7 place-items-center rounded-md bg-[#FF6400] text-xs font-semibold tracking-tighter text-white" style="font-family: 'JetBrains Mono', monospace;">NX</span><span class="text-sm font-medium tracking-tight text-white">Nexus</span></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Marca · hover</span>
+              <a href="#home" class="is-hover magnetic group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 transition-all duration-300 hover:border-[#FF6400]/40 hover:bg-[#FF6400]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50"><span class="grid size-7 place-items-center rounded-md bg-[#FF6400] text-xs font-semibold tracking-tighter text-white" style="font-family: 'JetBrains Mono', monospace;">NX</span><span class="text-sm font-medium tracking-tight text-white">Nexus</span></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Marca · focus</span>
+              <a href="#home" class="is-focus magnetic group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 transition-all duration-300 hover:border-[#FF6400]/40 hover:bg-[#FF6400]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50"><span class="grid size-7 place-items-center rounded-md bg-[#FF6400] text-xs font-semibold tracking-tighter text-white" style="font-family: 'JetBrains Mono', monospace;">NX</span><span class="text-sm font-medium tracking-tight text-white">Nexus</span></a>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Marca · interativo</span>
+              <a href="#home" class="magnetic group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 transition-all duration-300 hover:border-[#FF6400]/40 hover:bg-[#FF6400]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50"><span class="grid size-7 place-items-center rounded-md bg-[#FF6400] text-xs font-semibold tracking-tighter text-white" style="font-family: 'JetBrains Mono', monospace;">NX</span><span class="text-sm font-medium tracking-tight text-white">Nexus</span></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Link ativo</span>
+              <a href="#componentes" class="rounded-lg px-3 py-2 text-xs font-medium text-orange-100 bg-[#FF6400]/10 border border-[#FF6400]/20 transition-all duration-300 hover:bg-[#FF6400]/15" style="font-family: 'JetBrains Mono', monospace;">Plataforma</a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Link ativo · hover</span>
+              <a href="#componentes" class="is-hover rounded-lg px-3 py-2 text-xs font-medium text-orange-100 bg-[#FF6400]/10 border border-[#FF6400]/20 transition-all duration-300 hover:bg-[#FF6400]/15" style="font-family: 'JetBrains Mono', monospace;">Plataforma</a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Link · padrão</span>
+              <a href="#componentes" class="rounded-lg px-3 py-2 text-xs font-medium text-zinc-400 transition-all duration-300 hover:bg-white/5 hover:text-white" style="font-family: 'JetBrains Mono', monospace;">Preços</a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Link · hover</span>
+              <a href="#componentes" class="is-hover rounded-lg px-3 py-2 text-xs font-medium text-zinc-400 transition-all duration-300 hover:bg-white/5 hover:text-white" style="font-family: 'JetBrains Mono', monospace;">Preços</a>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Links · interativo</span>
+              <div class="flex items-center gap-1">
+                <a href="#componentes" class="rounded-lg px-3 py-2 text-xs font-medium text-orange-100 bg-[#FF6400]/10 border border-[#FF6400]/20 transition-all duration-300 hover:bg-[#FF6400]/15" style="font-family: 'JetBrains Mono', monospace;">Plataforma</a>
+                <a href="#componentes" class="rounded-lg px-3 py-2 text-xs font-medium text-zinc-400 transition-all duration-300 hover:bg-white/5 hover:text-white" style="font-family: 'JetBrains Mono', monospace;">Preços</a>
+              </div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Rodapé · padrão / hover</span>
+              <div class="space-y-3 text-sm text-zinc-400">
+                <a href="#componentes" class="block transition-colors hover:text-white">Plataforma</a>
+                <a href="#componentes" class="is-hover block transition-colors hover:text-white">Recursos</a>
+              </div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Legal · padrão / hover</span>
+              <div class="flex gap-4 text-xs text-zinc-600" style="font-family: 'JetBrains Mono', monospace;">
+                <a href="#componentes" class="transition-colors hover:text-zinc-300">Privacidade</a>
+                <a href="#componentes" class="is-hover transition-colors hover:text-zinc-300">Termos</a>
+              </div>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Rodapé · interativo</span>
+              <div class="space-y-3 text-sm text-zinc-400">
+                <a href="#componentes" class="block transition-colors hover:text-white">Plataforma</a>
+                <a href="#componentes" class="block transition-colors hover:text-white">Recursos</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulário -->
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-block-title">Campos de formulário</span><span class="ds-meta">focus: borda #FF6400/60 · fundo #FF6400/5 · anel 2px #FF6400/20 · sem estado de erro no original</span></div>
+          <div class="ds-states">
+            <div class="ds-state"><span class="ds-label">Input · padrão</span>
+              <label class="block ds-stretch">
+                <span class="text-xs font-semibold uppercase tracking-[0.14rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Nome</span>
+                <input type="text" class="mt-2 w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#FF6400]/60 focus:bg-[#FF6400]/5 focus:ring-2 focus:ring-[#FF6400]/20" placeholder="Maya Chen">
+              </label>
+            </div>
+            <div class="ds-state"><span class="ds-label">Input · focus</span>
+              <label class="block ds-stretch">
+                <span class="text-xs font-semibold uppercase tracking-[0.14rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Nome</span>
+                <input type="text" class="is-focus mt-2 w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#FF6400]/60 focus:bg-[#FF6400]/5 focus:ring-2 focus:ring-[#FF6400]/20" placeholder="Maya Chen">
+              </label>
+            </div>
+            <div class="ds-state"><span class="ds-label">Input · preenchido</span>
+              <label class="block ds-stretch">
+                <span class="text-xs font-semibold uppercase tracking-[0.14rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">E-mail de trabalho</span>
+                <input type="email" class="mt-2 w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#FF6400]/60 focus:bg-[#FF6400]/5 focus:ring-2 focus:ring-[#FF6400]/20" placeholder="maya@empresa.com" value="maya@empresa.com">
+              </label>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Input · interativo</span>
+              <label class="block ds-stretch">
+                <span class="text-xs font-semibold uppercase tracking-[0.14rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">E-mail de trabalho</span>
+                <input type="email" class="mt-2 w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#FF6400]/60 focus:bg-[#FF6400]/5 focus:ring-2 focus:ring-[#FF6400]/20" placeholder="maya@empresa.com">
+              </label>
+            </div>
+            <div class="ds-state"><span class="ds-label">Textarea · padrão</span>
+              <label class="block ds-stretch">
+                <span class="text-xs font-semibold uppercase tracking-[0.14rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">O que você está construindo?</span>
+                <textarea rows="3" class="mt-2 w-full resize-none rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#FF6400]/60 focus:bg-[#FF6400]/5 focus:ring-2 focus:ring-[#FF6400]/20" placeholder="Queremos melhorar a descoberta de produtos em..."></textarea>
+              </label>
+            </div>
+            <div class="ds-state"><span class="ds-label">Textarea · focus</span>
+              <label class="block ds-stretch">
+                <span class="text-xs font-semibold uppercase tracking-[0.14rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">O que você está construindo?</span>
+                <textarea rows="3" class="is-focus mt-2 w-full resize-none rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#FF6400]/60 focus:bg-[#FF6400]/5 focus:ring-2 focus:ring-[#FF6400]/20" placeholder="Queremos melhorar a descoberta de produtos em..."></textarea>
+              </label>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Textarea · interativo</span>
+              <label class="block ds-stretch">
+                <span class="text-xs font-semibold uppercase tracking-[0.14rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">O que você está construindo?</span>
+                <textarea rows="3" class="mt-2 w-full resize-none rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#FF6400]/60 focus:bg-[#FF6400]/5 focus:ring-2 focus:ring-[#FF6400]/20" placeholder="Queremos melhorar a descoberta de produtos em..."></textarea>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selos -->
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-block-title">Selos e indicadores</span><span class="ds-meta">sem estados interativos no original</span></div>
+          <div class="ds-states">
+            <div class="ds-state"><span class="ds-label">Pill do hero</span>
+              <div class="inline-flex items-center gap-2 rounded-full border border-[#FF6400]/20 bg-[#FF6400]/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18rem] text-orange-100" style="font-family: 'JetBrains Mono', monospace;"><span class="size-1.5 rounded-full bg-[#FFA500]"></span>API semântica</div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Chip Popular</span>
+              <span class="rounded-full border border-[#FFA500]/30 bg-[#FFA500]/10 px-3 py-1 text-xs text-orange-100" style="font-family: 'JetBrains Mono', monospace;">Popular</span>
+            </div>
+            <div class="ds-state"><span class="ds-label">Marca NX</span>
+              <div class="flex items-center gap-3"><span class="grid size-8 place-items-center rounded-md bg-[#FF6400] text-xs font-semibold tracking-tighter text-white" style="font-family: 'JetBrains Mono', monospace;">NX</span><span class="text-lg font-medium tracking-tight">Nexus</span></div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Controles de janela</span>
+              <div class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-[#FF6400]"></span><span class="size-2.5 rounded-full bg-[#FFA500]/70"></span><span class="size-2.5 rounded-full bg-white/20"></span></div>
+            </div>
+            <div class="ds-state ds-state-wide"><span class="ds-label">Card de status</span>
+              <div class="rounded-lg border border-white/10 bg-white/[0.03] p-4">
+                <p class="flex items-center gap-2 text-sm text-zinc-300"><span class="size-2 rounded-full bg-[#FFA500]"></span>Todos os sistemas normais</p>
+                <p class="mt-2 text-xs text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Latência da API 24 ms</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-block-title">Cards</span><span class="ds-meta">hover por borda, fundo ou elevação de 4px · 300ms</span></div>
+          <div class="ds-states">
+            <div class="ds-state ds-state-wide"><span class="ds-label">Result card · padrão / hover</span>
+              <div class="ds-stretch space-y-2">
+                <div class="group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] p-3 transition-all duration-300 hover:border-[#FF6400]/30 hover:bg-[#FF6400]/10">
+                  <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&amp;fit=crop&amp;w=240&amp;q=80" alt="Jaqueta impermeável" class="size-14 rounded-md object-cover">
+                  <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium text-white">Jaqueta AeroShell</p><p class="text-xs text-zinc-500">Correspondência: membrana, calor, trilha</p></div>
+                  <span class="text-xs text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">0.98</span>
+                </div>
+                <div class="is-hover group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] p-3 transition-all duration-300 hover:border-[#FF6400]/30 hover:bg-[#FF6400]/10">
+                  <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&amp;fit=crop&amp;w=240&amp;q=80" alt="Jaqueta técnica laranja" class="size-14 rounded-md object-cover">
+                  <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium text-white">Anorak Northline</p><p class="text-xs text-zinc-500">Correspondência: isolado, corta-vento</p></div>
+                  <span class="text-xs text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">0.94</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ds-state"><span class="ds-label">Bento · padrão</span>
+              <div class="ds-stretch rounded-xl border border-white/10 bg-[#0B0B0B] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FF6400]/40">
+                <iconify-icon icon="solar:graph-up-linear" class="text-4xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>
+                <h3 class="mt-5 text-2xl font-medium tracking-tight">Ranking adaptativo</h3>
+                <p class="mt-3 text-sm leading-6 text-zinc-400">Relevância, margem e afinidade.</p>
+              </div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Bento · hover</span>
+              <div class="is-hover ds-stretch rounded-xl border border-white/10 bg-[#0B0B0B] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FF6400]/40">
+                <iconify-icon icon="solar:graph-up-linear" class="text-4xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>
+                <h3 class="mt-5 text-2xl font-medium tracking-tight">Ranking adaptativo</h3>
+                <p class="mt-3 text-sm leading-6 text-zinc-400">Relevância, margem e afinidade.</p>
+              </div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Bento quente · hover</span>
+              <div class="is-hover ds-stretch rounded-xl border border-white/10 bg-[#120B07] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FF6400]/40">
+                <iconify-icon icon="solar:radar-2-linear" class="text-4xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>
+                <h3 class="mt-5 text-2xl font-medium tracking-tight">Radar de intenção</h3>
+                <p class="mt-3 text-sm leading-6 text-zinc-400">Necessidades inferidas de frases parciais.</p>
+              </div>
+            </div>
+            <div class="ds-state ds-state-live"><span class="ds-label">Bento · interativo</span>
+              <div class="ds-stretch rounded-xl border border-white/10 bg-[#120B07] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FF6400]/40">
+                <iconify-icon icon="solar:radar-2-linear" class="text-4xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>
+                <h3 class="mt-5 text-2xl font-medium tracking-tight">Radar de intenção</h3>
+                <p class="mt-3 text-sm leading-6 text-zinc-400">Necessidades inferidas de frases parciais.</p>
+              </div>
+            </div>
+
+            <div class="ds-state"><span class="ds-label">Métrica destaque · padrão</span>
+              <div class="ds-stretch rounded-xl border border-[#FF6400]/25 bg-[#4D2915]/60 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFA500]/50">
+                <p class="text-xs uppercase tracking-[0.18rem] text-orange-100" style="font-family: 'JetBrains Mono', monospace;">Latência mediana</p>
+                <p class="mt-5 text-5xl font-medium tracking-tight">24ms</p>
+                <p class="mt-3 text-sm leading-6 text-orange-100/70">Recuperação global na borda.</p>
+              </div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Métrica destaque · hover</span>
+              <div class="is-hover ds-stretch rounded-xl border border-[#FF6400]/25 bg-[#4D2915]/60 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFA500]/50">
+                <p class="text-xs uppercase tracking-[0.18rem] text-orange-100" style="font-family: 'JetBrains Mono', monospace;">Latência mediana</p>
+                <p class="mt-5 text-5xl font-medium tracking-tight">24ms</p>
+                <p class="mt-3 text-sm leading-6 text-orange-100/70">Recuperação global na borda.</p>
+              </div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Célula de recurso · padrão</span>
+              <div class="ds-stretch bg-[#090909] p-6 transition-all duration-300 hover:bg-[#FF6400]/10">
+                <iconify-icon icon="solar:bolt-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>
+                <h3 class="mt-4 text-xl font-medium">Caminhos mais rápidos</h3>
+                <p class="mt-3 text-sm leading-6 text-zinc-400">Menos buscas sem saída.</p>
+              </div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Célula de recurso · hover</span>
+              <div class="is-hover ds-stretch bg-[#090909] p-6 transition-all duration-300 hover:bg-[#FF6400]/10">
+                <iconify-icon icon="solar:bolt-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>
+                <h3 class="mt-4 text-xl font-medium">Caminhos mais rápidos</h3>
+                <p class="mt-3 text-sm leading-6 text-zinc-400">Menos buscas sem saída.</p>
+              </div>
+            </div>
+
+            <div class="ds-state"><span class="ds-label">Célula de logo · padrão</span>
+              <div class="ds-stretch grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:nasa" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Célula de logo · hover</span>
+              <div class="is-hover ds-stretch grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:nasa" class="is-hover text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            </div>
+
+            <div class="ds-state"><span class="ds-label">Plano · padrão</span>
+              <article class="ds-stretch rounded-xl border border-white/10 bg-[#090909] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20">
+                <h3 class="text-2xl font-medium tracking-tight">Launch</h3>
+                <p class="mt-3 text-sm leading-6 text-zinc-400">Busca semântica em uma superfície.</p>
+                <p class="mt-8 text-5xl font-medium tracking-tight">$490<span class="text-base text-zinc-500">/mês</span></p>
+                <ul class="mt-6 space-y-3 text-sm text-zinc-400"><li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-lg text-[#FFA500]" stroke-width="1.5"></iconify-icon>1M consultas</li></ul>
+              </article>
+            </div>
+            <div class="ds-state"><span class="ds-label">Plano · hover</span>
+              <article class="is-hover ds-stretch rounded-xl border border-white/10 bg-[#090909] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20">
+                <h3 class="text-2xl font-medium tracking-tight">Launch</h3>
+                <p class="mt-3 text-sm leading-6 text-zinc-400">Busca semântica em uma superfície.</p>
+                <p class="mt-8 text-5xl font-medium tracking-tight">$490<span class="text-base text-zinc-500">/mês</span></p>
+                <ul class="mt-6 space-y-3 text-sm text-zinc-400"><li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-lg text-[#FFA500]" stroke-width="1.5"></iconify-icon>1M consultas</li></ul>
+              </article>
+            </div>
+            <div class="ds-state"><span class="ds-label">Plano destaque · padrão</span>
+              <article class="ds-stretch rounded-xl border border-[#FF6400]/40 bg-[#4D2915]/65 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFA500]/60 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]">
+                <div class="flex items-center justify-between gap-3"><h3 class="text-2xl font-medium tracking-tight">Scale</h3><span class="rounded-full border border-[#FFA500]/30 bg-[#FFA500]/10 px-3 py-1 text-xs text-orange-100" style="font-family: 'JetBrains Mono', monospace;">Popular</span></div>
+                <p class="mt-3 text-sm leading-6 text-orange-100/75">Marketplaces em crescimento.</p>
+                <p class="mt-8 text-5xl font-medium tracking-tight">$1,900<span class="text-base text-orange-100/60">/mês</span></p>
+                <ul class="mt-6 space-y-3 text-sm text-orange-100/75"><li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-lg text-[#FFA500]" stroke-width="1.5"></iconify-icon>10M consultas</li></ul>
+              </article>
+            </div>
+            <div class="ds-state"><span class="ds-label">Plano destaque · hover</span>
+              <article class="is-hover ds-stretch rounded-xl border border-[#FF6400]/40 bg-[#4D2915]/65 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFA500]/60 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]">
+                <div class="flex items-center justify-between gap-3"><h3 class="text-2xl font-medium tracking-tight">Scale</h3><span class="rounded-full border border-[#FFA500]/30 bg-[#FFA500]/10 px-3 py-1 text-xs text-orange-100" style="font-family: 'JetBrains Mono', monospace;">Popular</span></div>
+                <p class="mt-3 text-sm leading-6 text-orange-100/75">Marketplaces em crescimento.</p>
+                <p class="mt-8 text-5xl font-medium tracking-tight">$1,900<span class="text-base text-orange-100/60">/mês</span></p>
+                <ul class="mt-6 space-y-3 text-sm text-orange-100/75"><li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-lg text-[#FFA500]" stroke-width="1.5"></iconify-icon>10M consultas</li></ul>
+              </article>
+            </div>
+
+            <div class="ds-state"><span class="ds-label">Stat do hero</span>
+              <div class="ds-stretch rounded-lg border border-white/10 bg-[#120B07]/80 p-4">
+                <p class="text-xs uppercase tracking-[0.16rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Intenção</p>
+                <p class="mt-3 text-3xl font-medium tracking-tight">92%</p>
+                <p class="mt-1 text-sm text-zinc-500">Utilidade outdoor</p>
+              </div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Card numerado</span>
+              <div class="ds-stretch rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                <p class="text-xs text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">01</p>
+                <p class="mt-3 text-sm leading-6 text-zinc-300">Linguagem, comportamento e catálogo juntos.</p>
+              </div>
+            </div>
+            <div class="ds-state"><span class="ds-label">Item de inclusão</span>
+              <ul class="ds-stretch"><li class="flex gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4"><iconify-icon icon="solar:check-circle-linear" class="mt-1 text-xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="text-sm leading-6 text-zinc-300">Recuperação híbrida keyword + vetor</span></li></ul>
+            </div>
+            <div class="ds-state"><span class="ds-label">Card de equipe</span>
+              <div class="ds-stretch rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&amp;fit=crop&amp;w=260&amp;q=80" alt="Retrato de Maya Chen" class="size-16 rounded-full object-cover">
+                <h3 class="mt-4 text-lg font-medium">Maya Chen</h3>
+                <p class="mt-1 text-xs uppercase tracking-[0.14rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Retrieval</p>
+              </div>
+            </div>
+            <div class="ds-state ds-state-wide"><span class="ds-label">Depoimento</span>
+              <figure class="ds-stretch rounded-xl border border-white/10 bg-[#090909] p-6">
+                <blockquote class="text-lg leading-8 text-zinc-300">“O Nexus entendeu a linguagem do nosso catálogo em dias.”</blockquote>
+                <figcaption class="mt-6 flex items-center gap-3">
+                  <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&amp;fit=crop&amp;w=180&amp;q=80" alt="Retrato de Ari Patel" class="size-12 rounded-full object-cover">
+                  <div><p class="text-sm font-medium">Ari Patel</p><p class="text-xs text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">VP de Produto, Luma</p></div>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Moldura -->
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-block-title">Moldura com cantos (.frame)</span><span class="ds-meta">cantos de 20px (h-5 w-5) a 12px da borda · variantes laranja /50 e neutra white/20 · hero usa 24px e /60 nos 4 cantos</span></div>
+          <div class="ds-states">
+            <div class="ds-state ds-stretch"><span class="ds-label">Laranja</span>
+              <div class="frame ds-stretch relative rounded-2xl border border-white/10 bg-[#050505]/75 p-6 sm:p-8">
+                <span class="absolute left-3 top-3 h-5 w-5 border-l border-t border-[#FF6400]/50"></span>
+                <span class="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-[#FF6400]/50"></span>
+                <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">00 / Seção</p>
+              </div>
+            </div>
+            <div class="ds-state ds-stretch"><span class="ds-label">Neutra</span>
+              <div class="frame ds-stretch relative rounded-2xl border border-white/10 bg-[#050505]/75 p-6 sm:p-8">
+                <span class="absolute left-3 top-3 h-5 w-5 border-l border-t border-white/20"></span>
+                <span class="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-white/20"></span>
+                <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">00 / Seção</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5) LAYOUT E ESPAÇAMENTO ============ -->
+    <section id="layout" class="px-4 py-8">
+      <div class="frame reveal relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-[#050505]/75 p-6 sm:p-8 lg:p-10">
+        <span class="absolute left-3 top-3 h-5 w-5 border-l border-t border-white/20"></span>
+        <span class="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-white/20"></span>
+        <div class="mb-10 max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">04 / Layout e espaçamento</p>
+          <h2 class="mt-5 text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Uma coluna de 1152px, empilhada em molduras.</h2>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Containers e espaçamentos</span></div>
+          <div class="ds-table-wrap">
+            <table class="ds-table">
+              <thead><tr><th>Token</th><th>Classe</th><th>Valor</th><th>Escala</th><th>Uso</th></tr></thead>
+              <tbody>
+                <tr><td>Container</td><td><span class="ds-code">max-w-6xl mx-auto</span></td><td>1152px</td><td></td><td>Nav, todas as molduras, rodapé</td></tr>
+                <tr><td>Gutter lateral</td><td><span class="ds-code">px-4</span></td><td>16px</td><td><div class="ds-space-bar ds-w-16"></div></td><td>Todas as seções e o header</td></tr>
+                <tr><td>Ritmo de seção</td><td><span class="ds-code">py-8</span></td><td>32px</td><td><div class="ds-space-bar ds-w-32"></div></td><td>Espaço vertical entre molduras (64px somados)</td></tr>
+                <tr><td>Hero</td><td><span class="ds-code">min-h-screen pt-28 pb-16</span></td><td>112px / 64px</td><td><div class="ds-space-bar ds-w-112"></div></td><td>Compensa a nav fixa (top-5 = 20px)</td></tr>
+                <tr><td>Última seção</td><td><span class="ds-code">pb-16</span></td><td>64px</td><td><div class="ds-space-bar ds-w-64"></div></td><td>Contato, antes do rodapé</td></tr>
+                <tr><td>Padding de moldura</td><td><span class="ds-code">p-6 sm:p-8 lg:p-10</span></td><td>24 → 32 → 40px</td><td><div class="ds-space-bar ds-w-40"></div></td><td>Molduras de conteúdo</td></tr>
+                <tr><td>Padding do hero</td><td><span class="ds-code">p-4 sm:p-6 lg:p-8</span></td><td>16 → 24 → 32px</td><td><div class="ds-space-bar ds-w-32"></div></td><td>Moldura do hero</td></tr>
+                <tr><td>Padding de card</td><td><span class="ds-code">p-6 · p-4 · p-3</span></td><td>24 / 16 / 12px</td><td><div class="ds-space-bar ds-w-24"></div></td><td>Cards grandes, internos, result cards</td></tr>
+                <tr><td>Gap de cards</td><td><span class="ds-code">gap-3 · gap-4</span></td><td>12 / 16px</td><td><div class="ds-space-bar ds-w-12"></div></td><td>Bento, galeria / preços, depoimentos</td></tr>
+                <tr><td>Gap de colunas</td><td><span class="ds-code">gap-8 · gap-10</span></td><td>32 / 40px</td><td><div class="ds-space-bar ds-w-40"></div></td><td>Hero / splits de texto</td></tr>
+                <tr><td>Divisória</td><td><span class="ds-code">gap-px bg-white/10</span></td><td>1px</td><td><div class="ds-space-bar ds-w-1"></div></td><td>Grids com linhas finas entre células</td></tr>
+                <tr><td>Título → corpo</td><td><span class="ds-code">mt-5 · mt-3 · mb-10</span></td><td>20 / 12 / 40px</td><td><div class="ds-space-bar ds-w-40"></div></td><td>Eyebrow→H2, H3→texto, cabeçalho→grid</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Padrão A · Bento 4 × 2</span><span class="ds-meta">grid gap-3 lg:grid-cols-4 lg:grid-rows-2 · card principal lg:col-span-2 lg:row-span-2</span></div>
+          <div class="grid gap-3 lg:grid-cols-4 lg:grid-rows-2">
+            <div class="rounded-xl border border-white/10 bg-[#0B0B0B] p-6 lg:col-span-2 lg:row-span-2">
+              <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">Bento</p>
+              <h2 class="mt-5 max-w-xl text-4xl font-medium leading-tight tracking-tight text-white sm:text-5xl">Card principal ocupa 2 × 2.</h2>
+              <div class="mt-8 overflow-hidden rounded-xl border border-white/10">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Infraestrutura de servidores" class="h-72 w-full object-cover opacity-80 transition-transform duration-700 hover:scale-105">
+              </div>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-[#120B07] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FF6400]/40"><iconify-icon icon="solar:radar-2-linear" class="text-4xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><h3 class="mt-5 text-2xl font-medium tracking-tight">Célula 1</h3></div>
+            <div class="rounded-xl border border-white/10 bg-[#0B0B0B] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FF6400]/40"><iconify-icon icon="solar:graph-up-linear" class="text-4xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><h3 class="mt-5 text-2xl font-medium tracking-tight">Célula 2</h3></div>
+            <div class="rounded-xl border border-white/10 bg-[#0B0B0B] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FF6400]/40"><iconify-icon icon="solar:shield-check-linear" class="text-4xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><h3 class="mt-5 text-2xl font-medium tracking-tight">Célula 3</h3></div>
+            <div class="rounded-xl border border-[#FF6400]/25 bg-[#4D2915]/60 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFA500]/50"><p class="text-xs uppercase tracking-[0.18rem] text-orange-100" style="font-family: 'JetBrains Mono', monospace;">Célula 4</p><p class="mt-5 text-5xl font-medium tracking-tight">24ms</p></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Padrão B · Split com divisória de 1px</span><span class="ds-meta">grid gap-px bg-white/10 lg:grid-cols-[0.8fr_1.2fr] · variações [0.85fr_1.15fr], [0.9fr_1.1fr], [0.75fr_1.25fr]</span></div>
+          <div class="frame relative grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 lg:grid-cols-[0.8fr_1.2fr]">
+            <span class="absolute left-3 top-3 z-10 h-5 w-5 border-l border-t border-[#FF6400]/50"></span>
+            <span class="absolute bottom-3 right-3 z-10 h-5 w-5 border-b border-r border-[#FF6400]/50"></span>
+            <div class="bg-[#070707]/95 p-6 sm:p-8 lg:p-10">
+              <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">Coluna 0.8fr</p>
+              <h2 class="mt-5 text-4xl font-medium leading-tight tracking-tight text-white sm:text-5xl">Título à esquerda.</h2>
+            </div>
+            <div class="bg-[#070707]/95 p-6 sm:p-8 lg:p-10">
+              <p class="max-w-2xl text-lg leading-8 text-zinc-300">Conteúdo à direita, com sub-grid de três colunas a partir de sm.</p>
+              <div class="mt-8 grid gap-4 sm:grid-cols-3">
+                <div class="rounded-xl border border-white/10 bg-white/[0.03] p-4"><p class="text-xs text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">01</p><p class="mt-3 text-sm leading-6 text-zinc-300">Interpretar.</p></div>
+                <div class="rounded-xl border border-white/10 bg-white/[0.03] p-4"><p class="text-xs text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">02</p><p class="mt-3 text-sm leading-6 text-zinc-300">Prever.</p></div>
+                <div class="rounded-xl border border-white/10 bg-white/[0.03] p-4"><p class="text-xs text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">03</p><p class="mt-3 text-sm leading-6 text-zinc-300">Responder.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Padrão C · Grade de logos 2 → 3 → 6</span><span class="ds-meta">grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-3 lg:grid-cols-6 · células min-h-28 (112px)</span></div>
+          <div class="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:grid-cols-6">
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:nasa" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:spacex" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:uber" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:visa" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:sony" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:dji" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Breakpoints</span><span class="ds-meta">padrão Tailwind: sm 640px · md 768px · lg 1024px (mobile-first, min-width)</span></div>
+          <div class="ds-table-wrap">
+            <table class="ds-table">
+              <thead><tr><th>Padrão</th><th>&lt; 640px</th><th>sm ≥ 640px</th><th>md ≥ 768px</th><th>lg ≥ 1024px</th></tr></thead>
+              <tbody>
+                <tr><td>Navegação</td><td>Marca + CTA; links ocultos</td><td>—</td><td>Links visíveis (md:flex)</td><td>—</td></tr>
+                <tr><td>Hero split</td><td>1 coluna, p-4, H1 48px</td><td>p-6, H1 60px, botões em linha</td><td>H1 72px</td><td>2 colunas 1.05fr / 0.95fr, p-8, H1 96px</td></tr>
+                <tr><td>Bento (A)</td><td>Cards empilhados</td><td>—</td><td>—</td><td>4 colunas × 2 linhas, principal 2 × 2</td></tr>
+                <tr><td>Split 1px (B)</td><td>1 coluna</td><td>Sub-grid em 3 colunas</td><td>—</td><td>2 colunas assimétricas</td></tr>
+                <tr><td>Logos (C)</td><td>2 colunas</td><td>3 colunas</td><td>—</td><td>6 colunas</td></tr>
+                <tr><td>Galeria</td><td>1 coluna</td><td>—</td><td>3 colunas, imagens 1 e 4 col-span-2</td><td>—</td></tr>
+                <tr><td>Preços / depoimentos / jornada</td><td>1 coluna</td><td>—</td><td>—</td><td>3 colunas (jornada: 4)</td></tr>
+                <tr><td>Rodapé</td><td>1 coluna</td><td>Linha legal em flex-row</td><td>—</td><td>4 colunas 1.2fr / 0.8fr × 3</td></tr>
+                <tr><td>Cabeçalhos de seção</td><td>H2 36px, empilhado</td><td>H2 48px, lado a lado (sm:flex-row)</td><td>—</td><td>Galeria: lg:flex-row</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6) MOVIMENTO E INTERAÇÃO ============ -->
+    <section id="movimento" class="px-4 py-8">
+      <div class="frame reveal relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-[#050505]/75 p-6 sm:p-8 lg:p-10">
+        <span class="absolute left-3 top-3 h-5 w-5 border-l border-t border-[#FF6400]/50"></span>
+        <span class="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-[#FF6400]/50"></span>
+        <div class="mb-10 max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">05 / Movimento e interação</p>
+          <h2 class="mt-5 text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Desfoque que assenta, elástico que volta.</h2>
+          <p class="mt-5 text-base leading-7 text-zinc-400">Animações de entrada usam GSAP 3.12.5 + ScrollTrigger com o mesmo script do original; o scroll é suavizado por Lenis. Tudo é desativado com <span class="ds-code">prefers-reduced-motion: reduce</span>.</p>
+        </div>
+
+        <div class="ds-motion-grid">
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">.masked-title</p><p class="ds-meta">palavras sobem de translate-y-full + blur-sm · <strong>1.05s</strong> · stagger 0.055 · <strong>power3.out</strong> · gatilho top 85%</p></div>
+              <button type="button" data-ds-replay="masked-title" data-ds-target="ds-demo-masked" class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-medium text-white transition-all duration-300 hover:bg-white/[0.08]" style="font-family: 'JetBrains Mono', monospace;">Repetir</button>
+            </div>
+            <div class="ds-stage" id="ds-demo-masked">
+              <p class="masked-title text-5xl font-medium leading-[0.98] tracking-tight text-white">Antecipa a intenção</p>
+            </div>
+          </div>
+
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">.reveal</p><p class="ds-meta">y 28 → 0 · opacidade 0 → 1 · blur 0.75rem → 0 · <strong>0.9s</strong> · <strong>power3.out</strong> · delay min(i × 0.025, 0.2) · gatilho top 88%</p></div>
+              <button type="button" data-ds-replay="reveal" data-ds-target="ds-demo-reveal" class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-medium text-white transition-all duration-300 hover:bg-white/[0.08]" style="font-family: 'JetBrains Mono', monospace;">Repetir</button>
+            </div>
+            <div class="ds-stage" id="ds-demo-reveal">
+              <div class="reveal rounded-xl border border-white/10 bg-[#120B07] p-6">
+                <iconify-icon icon="solar:shield-check-linear" class="text-4xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>
+                <h3 class="mt-5 text-2xl font-medium tracking-tight">APIs com guarda-corpos</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">.result-card</p><p class="ds-meta">x 18 → 0 · opacidade 0 → 1 · <strong>0.75s</strong> · stagger 0.12 · <strong>power2.out</strong> · delay 0.7s no carregamento</p></div>
+              <button type="button" data-ds-replay="result-card" data-ds-target="ds-demo-result" class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-medium text-white transition-all duration-300 hover:bg-white/[0.08]" style="font-family: 'JetBrains Mono', monospace;">Repetir</button>
+            </div>
+            <div class="ds-stage space-y-2" id="ds-demo-result">
+              <div class="result-card group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] p-3 transition-all duration-300 hover:border-[#FF6400]/30 hover:bg-[#FF6400]/10">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&amp;fit=crop&amp;w=240&amp;q=80" alt="Jaqueta impermeável" class="size-14 rounded-md object-cover">
+                <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium text-white">Jaqueta AeroShell</p><p class="text-xs text-zinc-500">Correspondência: membrana, calor</p></div>
+                <span class="text-xs text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">0.98</span>
+              </div>
+              <div class="result-card group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] p-3 transition-all duration-300 hover:border-[#FF6400]/30 hover:bg-[#FF6400]/10">
+                <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&amp;fit=crop&amp;w=240&amp;q=80" alt="Jaqueta técnica laranja" class="size-14 rounded-md object-cover">
+                <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium text-white">Anorak Northline</p><p class="text-xs text-zinc-500">Correspondência: isolado, corta-vento</p></div>
+                <span class="text-xs text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">0.94</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">.magnetic</p><p class="ds-meta">segue o cursor x × 0.18, y × 0.28 · <strong>0.45s power3.out</strong> · ao sair volta em <strong>0.65s elastic.out(1, 0.32)</strong></p></div>
+            </div>
+            <div class="ds-stage">
+              <div class="ds-hover-row">
+                <a href="#movimento" class="magnetic group relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:translate-y-0"><span class="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 group-hover:translate-y-0"></span><span class="relative flex items-center gap-2">Passe o mouse <iconify-icon icon="solar:code-square-linear" class="text-lg transition-transform duration-300 group-hover:rotate-6" stroke-width="1.5"></iconify-icon></span></a>
+                <a href="#movimento" class="magnetic group inline-flex items-center gap-2 rounded-lg border border-[#66381D] bg-[#331B0E] px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-[#FF6400]/70 hover:bg-[#4D2915] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50">Magnético <iconify-icon icon="solar:arrow-right-linear" class="text-base text-[#FFA500] transition-transform duration-300 group-hover:translate-x-1" stroke-width="1.5"></iconify-icon></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">Transições CSS de hover</p><p class="ds-meta">transition-all <strong>300ms</strong> (padrão) · 500ms (galeria) · 700ms (zoom de imagem) · transition-colors 150ms · easing <strong>cubic-bezier(0.4, 0, 0.2, 1)</strong></p></div>
+            </div>
+            <div class="ds-stage">
+              <div class="ds-hover-row">
+                <div class="ds-thumb"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Painel de analytics" class="h-72 w-full rounded-xl border border-white/10 object-cover opacity-85 transition-all duration-500 hover:-translate-y-1 hover:opacity-100"></div>
+                <div class="ds-thumb overflow-hidden rounded-xl border border-white/10"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Infraestrutura de servidores" class="h-72 w-full object-cover opacity-80 transition-transform duration-700 hover:scale-105"></div>
+              </div>
+              <p class="ds-meta">Galeria: elevação 4px + opacidade 85% → 100% em 500ms · Bento: escala 1.05 em 700ms</p>
+            </div>
+          </div>
+
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">Micro-movimentos de ícone</p><p class="ds-meta">group-hover · <strong>300ms</strong> · translate-x-1 (seta) · translate-y-1 (seta para baixo) · rotate-6 (código) · translate-x-1 + -translate-y-1 (avião de papel)</p></div>
+            </div>
+            <div class="ds-stage">
+              <div class="ds-hover-row">
+                <a href="#movimento" class="magnetic group inline-flex items-center gap-2 rounded-lg border border-[#66381D] bg-[#331B0E] px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-[#FF6400]/70 hover:bg-[#4D2915] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/50">Seta <iconify-icon icon="solar:arrow-right-linear" class="text-base text-[#FFA500] transition-transform duration-300 group-hover:translate-x-1" stroke-width="1.5"></iconify-icon></a>
+                <a href="#movimento" class="magnetic group inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 active:translate-y-0">Descer <iconify-icon icon="solar:alt-arrow-down-linear" class="text-lg text-[#FFA500] transition-transform duration-300 group-hover:translate-y-1" stroke-width="1.5"></iconify-icon></a>
+                <button type="button" class="magnetic group inline-flex items-center justify-center gap-2 rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:scale-[0.99]">Enviar <iconify-icon icon="solar:plain-linear" class="text-lg transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" stroke-width="1.5"></iconify-icon></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">#hero-canvas</p><p class="ds-meta">arco de pontos a cada 6px (até 5.5px) · ondas sin/cos · time += 0.012 por frame · requestAnimationFrame contínuo · composite "lighter"</p></div>
+            </div>
+            <div class="ds-stage"><p class="ds-note">É o fundo fixo desta página inteira — role e observe o arco laranja ondulando por trás das molduras translúcidas.</p></div>
+          </div>
+
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">Lenis (scroll suave)</p><p class="ds-meta">duration <strong>1.15</strong> · smoothWheel · wheelMultiplier 0.85 · touchMultiplier 1.15</p></div>
+            </div>
+            <div class="ds-stage"><p class="ds-note">Ativo na página toda: use a roda do mouse para sentir a inércia. Âncoras da navegação rolam suavemente.</p></div>
+          </div>
+
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">.pin-section / .pin-card</p><p class="ds-meta">seção fixada · end +=1700px · scrub 1 · cards yPercent 110 → 0 → -110 com opacidade, ease none</p></div>
+              <button type="button" data-ds-replay="pin" class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-medium text-white transition-all duration-300 hover:bg-white/[0.08]" style="font-family: 'JetBrains Mono', monospace;">Repetir</button>
+            </div>
+            <div class="ds-stage"><p class="ds-note">Animação guiada pelo scroll: o botão leva ao início da seção fixada logo abaixo. Role para trocar as etapas.</p></div>
+          </div>
+
+          <div class="ds-motion-card">
+            <div class="ds-motion-head">
+              <div><p class="ds-block-title">.journey-step</p><p class="ds-meta">y 40 → 0 · opacidade 0 → 1 · <strong>0.9s</strong> · stagger 0.16 · <strong>power3.out</strong> · gatilho .journey-track top 80%</p></div>
+              <button type="button" data-ds-replay="journey" data-ds-target="ds-demo-journey" class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-medium text-white transition-all duration-300 hover:bg-white/[0.08]" style="font-family: 'JetBrains Mono', monospace;">Repetir</button>
+            </div>
+            <div class="ds-stage" id="ds-demo-journey">
+              <p class="ds-note">Demonstrado na trilha de quatro passos abaixo da seção fixada.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pin-section relative px-4 py-8">
+      <div class="frame relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-white/10 bg-[#050505]/75">
+        <span class="absolute left-3 top-3 z-10 h-5 w-5 border-l border-t border-[#FF6400]/50"></span>
+        <span class="absolute bottom-3 right-3 z-10 h-5 w-5 border-b border-r border-[#FF6400]/50"></span>
+        <div class="grid min-h-[40rem] lg:grid-cols-2">
+          <div class="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">05.1 / Scroll story</p>
+            <h2 class="mt-5 text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Uma camada que se revela a cada sinal.</h2>
+            <p class="mt-5 max-w-lg text-base leading-7 text-zinc-400">Seção fixada com scrub: os três cards trocam de lugar conforme o scroll avança 1700px.</p>
+          </div>
+          <div class="relative overflow-hidden border-t border-white/10 lg:border-l lg:border-t-0">
+            <div class="pin-card absolute inset-6 rounded-xl border border-white/10 bg-[#0B0B0B] p-6">
+              <p class="text-xs uppercase tracking-[0.18rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Etapa 01</p>
+              <h3 class="mt-5 text-3xl font-medium tracking-tight">Consulta literal</h3>
+              <p class="mt-3 text-zinc-400">Captura a frase crua e o universo imediato de recuperação.</p>
+            </div>
+            <div class="pin-card absolute inset-6 rounded-xl border border-[#FF6400]/20 bg-[#120B07] p-6">
+              <p class="text-xs uppercase tracking-[0.18rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Etapa 02</p>
+              <h3 class="mt-5 text-3xl font-medium tracking-tight">Expansão semântica</h3>
+              <p class="mt-3 text-zinc-400">Entende sinônimos, necessidades adjacentes e atributos.</p>
+            </div>
+            <div class="pin-card absolute inset-6 rounded-xl border border-[#FFA500]/30 bg-[#4D2915] p-6">
+              <p class="text-xs uppercase tracking-[0.18rem] text-orange-100/70" style="font-family: 'JetBrains Mono', monospace;">Etapa 03</p>
+              <h3 class="mt-5 text-3xl font-medium tracking-tight">Resposta antecipada</h3>
+              <p class="mt-3 text-orange-100/75">Um resultado guiado que parece um passo à frente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="jornada" class="px-4 py-8">
+      <div class="frame relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-[#050505]/75 p-6 sm:p-8 lg:p-10">
+        <span class="absolute left-3 top-3 h-5 w-5 border-l border-t border-white/20"></span>
+        <span class="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-white/20"></span>
+        <div class="mb-10 max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">05.2 / Jornada</p>
+          <h2 class="mt-5 text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Passos que entram em cascata.</h2>
+        </div>
+        <div class="journey-track grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 lg:grid-cols-4">
+          <div class="journey-step bg-[#090909] p-6"><p class="text-xs text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">01</p><h3 class="mt-6 text-2xl font-medium tracking-tight">Conectar</h3><p class="mt-3 text-sm leading-6 text-zinc-400">Sincronize catálogo, conteúdo e logs.</p></div>
+          <div class="journey-step bg-[#090909] p-6"><p class="text-xs text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">02</p><h3 class="mt-6 text-2xl font-medium tracking-tight">Entender</h3><p class="mt-3 text-sm leading-6 text-zinc-400">Embeddings de domínio e significado estruturado.</p></div>
+          <div class="journey-step bg-[#090909] p-6"><p class="text-xs text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">03</p><h3 class="mt-6 text-2xl font-medium tracking-tight">Lançar</h3><p class="mt-3 text-sm leading-6 text-zinc-400">Busca, recomendações e respostas em uma API.</p></div>
+          <div class="journey-step bg-[#4D2915]/70 p-6"><p class="text-xs text-orange-100" style="font-family: 'JetBrains Mono', monospace;">04</p><h3 class="mt-6 text-2xl font-medium tracking-tight">Melhorar</h3><p class="mt-3 text-sm leading-6 text-orange-100/70">Observe lacunas e publique ajustes mensuráveis.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7) ÍCONES ============ -->
+    <section id="icones" class="px-4 py-8 pb-16">
+      <div class="frame reveal relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-[#050505]/75 p-6 sm:p-8 lg:p-10">
+        <span class="absolute left-3 top-3 h-5 w-5 border-l border-t border-[#FF6400]/50"></span>
+        <span class="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-[#FF6400]/50"></span>
+        <div class="mb-10 max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.18rem] text-[#FFA500]" style="font-family: 'JetBrains Mono', monospace;">06 / Ícones</p>
+          <h2 class="mt-5 text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Solar Linear, traço de 1.5.</h2>
+          <p class="mt-5 text-base leading-7 text-zinc-400">Web component <span class="ds-code">&lt;iconify-icon&gt;</span> 2.1.0 com o set <span class="ds-code">solar:*-linear</span> para UI e <span class="ds-code">simple-icons:*</span> para logos. O tamanho vem de <span class="ds-code">font-size</span> (1em) e a cor de <span class="ds-code">currentColor</span>.</p>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Ícones de interface (Solar Linear)</span></div>
+          <div class="ds-icon-grid">
+            <div class="ds-icon-cell"><iconify-icon icon="solar:arrow-right-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">arrow-right</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:alt-arrow-down-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">alt-arrow-down</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:code-square-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">code-square</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:minimalistic-magnifer-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">minimalistic-magnifer</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:radar-2-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">radar-2</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:graph-up-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">graph-up</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:shield-check-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">shield-check</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:bolt-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">bolt</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:layers-minimalistic-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">layers-minimalistic</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:dialog-2-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">dialog-2</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:chart-2-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">chart-2</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:check-circle-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">check-circle</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:letter-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">letter</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:lock-keyhole-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">lock-keyhole</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:clock-circle-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">clock-circle</span></div>
+            <div class="ds-icon-cell"><iconify-icon icon="solar:plain-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">plain</span></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Tamanhos usados</span></div>
+          <div class="ds-icon-sizes">
+            <div><iconify-icon icon="solar:radar-2-linear" class="text-base text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">text-base · 16</span></div>
+            <div><iconify-icon icon="solar:radar-2-linear" class="text-lg text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">text-lg · 18</span></div>
+            <div><iconify-icon icon="solar:radar-2-linear" class="text-xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">text-xl · 20</span></div>
+            <div><iconify-icon icon="solar:radar-2-linear" class="text-2xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">text-2xl · 24</span></div>
+            <div><iconify-icon icon="solar:radar-2-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">text-3xl · 30</span></div>
+            <div><iconify-icon icon="solar:radar-2-linear" class="text-4xl text-[#FFA500]" stroke-width="1.5"></iconify-icon><span class="ds-label">text-4xl · 36</span></div>
+            <div><iconify-icon icon="simple-icons:spacex" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon><span class="ds-label">text-[4rem] · 64</span></div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Herança de cor (currentColor)</span></div>
+          <div class="ds-states">
+            <div class="ds-state"><span class="ds-label">text-[#FFA500] · padrão</span><iconify-icon icon="solar:check-circle-linear" class="text-3xl text-[#FFA500]" stroke-width="1.5"></iconify-icon></div>
+            <div class="ds-state"><span class="ds-label">Herdado do botão primário</span>
+              <a href="#icones" class="magnetic group relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-[#FF6400]/40 bg-[#FF6400] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFA500] hover:text-[#030303] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA500]/60 active:translate-y-0"><span class="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 group-hover:translate-y-0"></span><span class="relative flex items-center gap-2">Branco → #030303 <iconify-icon icon="solar:code-square-linear" class="text-lg transition-transform duration-300 group-hover:rotate-6" stroke-width="1.5"></iconify-icon></span></a>
+            </div>
+            <div class="ds-state"><span class="ds-label">Logo · zinc-400 → white</span><iconify-icon icon="simple-icons:sony" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="ds-state"><span class="ds-label">Logo · hover</span><iconify-icon icon="simple-icons:sony" class="is-hover text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="ds-state ds-state-wide"><span class="ds-label">Ícone em linha de lista</span>
+              <div class="space-y-3 text-sm text-zinc-400">
+                <p class="flex items-center gap-3"><iconify-icon icon="solar:letter-linear" class="text-xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>hello@nexus.search</p>
+                <p class="flex items-center gap-3"><iconify-icon icon="solar:clock-circle-linear" class="text-xl text-[#FFA500]" stroke-width="1.5"></iconify-icon>Resposta em até um dia útil</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-block">
+          <div class="ds-block-head"><span class="ds-label">Logos (Simple Icons)</span></div>
+          <div class="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:grid-cols-6">
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:grab" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:bose" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:discover" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:nikon" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:craftsman" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+            <div class="grid min-h-28 place-items-center bg-[#070707] transition-all duration-300 hover:bg-[#FF6400]/10"><iconify-icon icon="simple-icons:visa" class="text-[4rem] text-zinc-400 hover:text-white" stroke-width="1.5"></iconify-icon></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="relative z-10 px-4 pb-6">
+    <div class="mx-auto max-w-6xl rounded-2xl border border-white/10 bg-[#050505]/80 p-6 sm:p-8">
+      <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr]">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="grid size-8 place-items-center rounded-md bg-[#FF6400] text-xs font-semibold tracking-tighter text-white" style="font-family: 'JetBrains Mono', monospace;">NX</span>
+            <span class="text-lg font-medium tracking-tight">Nexus</span>
+          </div>
+          <p class="mt-4 max-w-sm text-sm leading-6 text-zinc-500">Design system vivo extraído da landing page Nexus.</p>
+        </div>
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-[0.16rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Fundamentos</h3>
+          <div class="mt-4 space-y-3 text-sm text-zinc-400">
+            <a href="#tipografia" class="block transition-colors hover:text-white">Tipografia</a>
+            <a href="#cores" class="block transition-colors hover:text-white">Cores</a>
+            <a href="#layout" class="block transition-colors hover:text-white">Layout</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-[0.16rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Biblioteca</h3>
+          <div class="mt-4 space-y-3 text-sm text-zinc-400">
+            <a href="#componentes" class="block transition-colors hover:text-white">Componentes</a>
+            <a href="#movimento" class="block transition-colors hover:text-white">Movimento</a>
+            <a href="#icones" class="block transition-colors hover:text-white">Ícones</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-[0.16rem] text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Status</h3>
+          <div class="mt-4 rounded-lg border border-white/10 bg-white/[0.03] p-4">
+            <p class="flex items-center gap-2 text-sm text-zinc-300"><span class="size-2 rounded-full bg-[#FFA500]"></span>Sincronizado com o original</p>
+            <p class="mt-2 text-xs text-zinc-500" style="font-family: 'JetBrains Mono', monospace;">Tailwind 3.4 · GSAP 3.12.5</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-8 flex flex-col justify-between gap-4 border-t border-white/10 pt-6 text-xs text-zinc-600 sm:flex-row" style="font-family: 'JetBrains Mono', monospace;">
+        <p>© 2026 Nexus Discovery Systems.</p>
+        <div class="flex gap-4">
+          <a href="#home" class="transition-colors hover:text-zinc-300">Topo</a>
+          <a href="#componentes" class="transition-colors hover:text-zinc-300">Componentes</a>
+          <a href="#movimento" class="transition-colors hover:text-zinc-300">Movimento</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script original da página, copiado sem alterações -->
+  <script>
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d', { alpha: false });
+    let width;
+    let height;
+    let time = 0;
+    const spacing = 6;
+    const dotSize = 5.5;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function drawField() {
+      ctx.fillStyle = '#030303';
+      ctx.fillRect(0, 0, width, height);
+      time += 0.012;
+
+      const centerX = width / 2;
+      const archPeakY = height * 0.32;
+      const archWidth = width * 1.48;
+      const archHeight = height * 0.72;
+
+      ctx.globalCompositeOperation = 'lighter';
+
+      for (let x = 0; x < width; x += spacing) {
+        const normX = (x - centerX) / (archWidth / 2);
+        const curveY = archPeakY + (normX * normX) * archHeight;
+
+        for (let y = 0; y < height; y += spacing) {
+          const distanceToCurve = Math.abs(y - curveY);
+          const thickness = 128 + (1 - Math.abs(normX)) * 82;
+
+          if (distanceToCurve < thickness) {
+            let intensity = 1 - distanceToCurve / thickness;
+            const waveX = Math.sin(x * 0.014 + time);
+            const waveY = Math.cos(y * 0.018 + time * 1.15);
+            intensity = intensity * 0.72 + waveX * waveY * 0.24 * intensity;
+            intensity *= Math.max(0, 1 - Math.pow(Math.abs(normX), 2.3));
+
+            if (intensity > 0.025) {
+              let r = Math.min(255, 102 * intensity + 156 * Math.pow(intensity, 2));
+              let g = Math.min(255, 44 * intensity + 198 * Math.pow(intensity, 3));
+              let b = Math.min(255, 12 * intensity + 76 * Math.pow(intensity, 4));
+
+              if (intensity > 0.72) {
+                const coreBoost = (intensity - 0.72) * 3.5;
+                r = Math.min(255, r + 140 * coreBoost);
+                g = Math.min(255, g + 132 * coreBoost);
+                b = Math.min(255, b + 118 * coreBoost);
+              }
+
+              ctx.fillStyle = `rgb(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)})`;
+              ctx.fillRect(x, y, dotSize * intensity, dotSize * intensity);
+            }
+          }
+        }
+      }
+
+      ctx.globalCompositeOperation = 'source-over';
+      requestAnimationFrame(drawField);
+    }
+
+    drawField();
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reduceMotion && window.Lenis) {
+      const lenis = new Lenis({
+        duration: 1.15,
+        smoothWheel: true,
+        wheelMultiplier: 0.85,
+        touchMultiplier: 1.15
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+    }
+
+    if (window.gsap && window.ScrollTrigger && !reduceMotion) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      document.querySelectorAll('.masked-title').forEach((title) => {
+        const words = title.textContent.trim().split(' ');
+        title.innerHTML = words.map((word) => `<span class="inline-block overflow-hidden align-bottom"><span class="word inline-block translate-y-full blur-sm">${word}</span></span>`).join(' ');
+        gsap.to(title.querySelectorAll('.word'), {
+          y: 0,
+          filter: 'blur(0rem)',
+          duration: 1.05,
+          stagger: 0.055,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: title,
+            start: 'top 85%'
+          }
+        });
+      });
+
+      gsap.utils.toArray('.reveal').forEach((el, index) => {
+        gsap.fromTo(el, {
+          y: 28,
+          autoAlpha: 0,
+          filter: 'blur(0.75rem)'
+        }, {
+          y: 0,
+          autoAlpha: 1,
+          filter: 'blur(0rem)',
+          duration: 0.9,
+          delay: Math.min(index * 0.025, 0.2),
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%'
+          }
+        });
+      });
+
+      gsap.fromTo('.result-card', {
+        x: 18,
+        autoAlpha: 0
+      }, {
+        x: 0,
+        autoAlpha: 1,
+        duration: 0.75,
+        stagger: 0.12,
+        ease: 'power2.out',
+        delay: 0.7
+      });
+
+      gsap.fromTo('.journey-step', {
+        y: 40,
+        autoAlpha: 0
+      }, {
+        y: 0,
+        autoAlpha: 1,
+        stagger: 0.16,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.journey-track',
+          start: 'top 80%'
+        }
+      });
+
+      const cards = gsap.utils.toArray('.pin-card');
+      gsap.set(cards, { yPercent: 110, opacity: 0 });
+      gsap.set(cards[0], { yPercent: 0, opacity: 1 });
+
+      const storyTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.pin-section',
+          start: 'top top',
+          end: '+=1700',
+          scrub: 1,
+          pin: true
+        }
+      });
+
+      storyTl
+        .to(cards[0], { yPercent: -110, opacity: 0, ease: 'none' })
+        .to(cards[1], { yPercent: 0, opacity: 1, ease: 'none' }, '<')
+        .to(cards[1], { yPercent: -110, opacity: 0, ease: 'none' })
+        .to(cards[2], { yPercent: 0, opacity: 1, ease: 'none' }, '<');
+
+      document.querySelectorAll('.magnetic').forEach((button) => {
+        button.addEventListener('mousemove', (event) => {
+          const rect = button.getBoundingClientRect();
+          const x = event.clientX - rect.left - rect.width / 2;
+          const y = event.clientY - rect.top - rect.height / 2;
+
+          gsap.to(button, {
+            x: x * 0.18,
+            y: y * 0.28,
+            duration: 0.45,
+            ease: 'power3.out'
+          });
+        });
+
+        button.addEventListener('mouseleave', () => {
+          gsap.to(button, {
+            x: 0,
+            y: 0,
+            duration: 0.65,
+            ease: 'elastic.out(1, 0.32)'
+          });
+        });
+      });
+    } else {
+      document.querySelectorAll('.masked-title').forEach((title) => {
+        title.style.opacity = '1';
+      });
+    }
+
+    document.querySelectorAll('iconify-icon').forEach((icon) => {
+      icon.setAttribute('stroke-width', '1.5');
+    });
+  </script>
+
+  <!-- ds-docs: botões "Repetir" da Galeria de Movimento (reaplicam os mesmos parâmetros GSAP do script original) -->
+  <script>
+    (function () {
+      var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll('[data-ds-replay]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var kind = btn.getAttribute('data-ds-replay');
+          if (kind === 'pin') {
+            var pin = document.querySelector('.pin-section');
+            if (pin) pin.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+          }
+          if (!window.gsap || noMotion) return;
+          var scope = document.getElementById(btn.getAttribute('data-ds-target'));
+          if (kind === 'masked-title') {
+            gsap.fromTo(scope.querySelectorAll('.word'),
+              { y: function (i, el) { return el.offsetHeight; }, filter: 'blur(4px)' },
+              { y: 0, filter: 'blur(0rem)', duration: 1.05, stagger: 0.055, ease: 'power3.out', overwrite: true });
+          } else if (kind === 'reveal') {
+            gsap.fromTo(scope.querySelectorAll('.reveal'),
+              { y: 28, autoAlpha: 0, filter: 'blur(0.75rem)' },
+              { y: 0, autoAlpha: 1, filter: 'blur(0rem)', duration: 0.9, ease: 'power3.out', overwrite: true });
+          } else if (kind === 'result-card') {
+            gsap.fromTo(scope.querySelectorAll('.result-card'),
+              { x: 18, autoAlpha: 0 },
+              { x: 0, autoAlpha: 1, duration: 0.75, stagger: 0.12, ease: 'power2.out', delay: 0.7, overwrite: true });
+          } else if (kind === 'journey') {
+            var track = document.querySelector('.journey-track');
+            if (!track) return;
+            track.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            gsap.fromTo(track.querySelectorAll('.journey-step'),
+              { y: 40, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, stagger: 0.16, duration: 0.9, ease: 'power3.out', delay: 0.6, overwrite: true });
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- Handler de fallback de imagens presente no original, copiado sem alterações -->
+  <script data-img-fallback-handler="">!function(){var f=["https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg","https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4734259a-bad7-422f-981e-ce01e79184f2_1600w.jpg","https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c543a9e1-f226-4ced-80b0-feb8445a75b9_1600w.jpg","https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/5bab247f-35d9-400d-a82b-fd87cfe913d2_1600w.webp","https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/30104e3c-5eea-4b93-93e9-5313698a7156_1600w.webp"],h=new Set;function g(s){for(var x=0,i=0;i<s.length;i++)x=(x<<5)-x+s.charCodeAt(i)|0;return f[Math.abs(x)%f.length]}function r(t){var s=t.src;if(s&&!h.has(s)){h.add(s);t.src=g(s)}}window.addEventListener("error",function(e){var t=e.target;if(t&&t.tagName==="IMG")r(t)},!0);function c(){document.querySelectorAll("img").forEach(function(i){if(i.complete&&!i.naturalWidth&&i.src)r(i)})}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",c);else c()}()</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+{
+  "common": {
+    "appName": "Nexus",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "saved": "Changes saved.",
+    "cancel": "Cancel",
+    "you": "You",
+    "never": "Never",
+    "noEmail": "No email"
+  },
+  "validation": {
+    "required": "This field is required.",
+    "invalidEmail": "Enter a valid email.",
+    "tooShort": "Password must be at least 8 characters.",
+    "mismatch": "Passwords don't match."
+  },
+  "auth": {
+    "panel": {
+      "eyebrow": "Nexus dashboard",
+      "title": "Your product, in one place.",
+      "body": "Metrics, people and account settings, built with the same care as every detail of the platform.",
+      "statLabel": "Uptime",
+      "statValue": "99.98%",
+      "statHint": "last 30 days"
+    },
+    "login": {
+      "eyebrow": "Access",
+      "title": "Sign in",
+      "subtitle": "Use your account email and password.",
+      "email": "Email",
+      "emailPlaceholder": "you@company.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "forgot": "Forgot password",
+      "submit": "Sign in",
+      "noAccount": "No account? Access is by administrator invitation.",
+      "submitting": "Signing in…"
+    },
+    "forgot": {
+      "eyebrow": "Recover access",
+      "title": "Forgot your password?",
+      "subtitle": "Enter your email and we'll send you a link to create a new password.",
+      "submit": "Send link",
+      "sentTitle": "Check your email",
+      "sentBody": "If an account exists for {email}, you'll receive a link shortly. The link expires in 1 hour.",
+      "back": "Back to sign in"
+    },
+    "reset": {
+      "eyebrow": "New password",
+      "title": "Set your new password",
+      "subtitle": "This is also where an invited user sets a password on first access.",
+      "password": "New password",
+      "confirm": "Confirm new password",
+      "hint": "At least 8 characters.",
+      "submit": "Save password",
+      "doneTitle": "Password updated",
+      "doneBody": "Your password was saved and you are signed in.",
+      "goHome": "Go to dashboard"
+    }
+  },
+  "nav": {
+    "section": "Navigation",
+    "adminSection": "Administration",
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "users": "Users",
+    "signOut": "Sign out",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "topbar": {
+    "language": "Language"
+  },
+  "home": {
+    "eyebrow": "Home",
+    "greeting": "Hi, {name}.",
+    "subtitleAdmin": "Platform overview for the last 30 days.",
+    "subtitleUser": "Your usage over the last 30 days.",
+    "vsPrevious": "vs. previous 30 days",
+    "metrics": {
+      "activeUsers": "Active users",
+      "revenue": "Monthly revenue",
+      "requests": "Requests",
+      "uptime": "Uptime",
+      "myRequests": "My requests",
+      "planUsage": "Plan usage",
+      "savedViews": "Saved views",
+      "latency": "Average latency"
+    },
+    "chart": {
+      "titleAdmin": "Platform requests",
+      "titleUser": "Your requests",
+      "subtitle": "Per day · 30 days",
+      "series": "Requests"
+    },
+    "activity": {
+      "title": "Recent activity",
+      "sign_in": "{actor} signed in",
+      "invite": "{actor} invited {target}",
+      "user_create": "{actor} created {target}",
+      "role_change": "{actor} changed the role of {target}",
+      "password_reset": "{actor} reset their password",
+      "profile_update": "{actor} updated their profile",
+      "user_disable": "{actor} disabled {target}",
+      "user_enable": "{actor} re-enabled {target}",
+      "empty": "No activity yet."
+    },
+    "shortcuts": {
+      "title": "Shortcuts",
+      "profile": "Edit profile",
+      "settings": "Account settings",
+      "security": "Change password",
+      "users": "Invite user"
+    },
+    "greetingAnonymous": "Hi."
+  },
+  "profile": {
+    "eyebrow": "Profile",
+    "title": "Your profile",
+    "subtitle": "This information is visible to other members of the account.",
+    "avatar": "Photo",
+    "changeAvatar": "Change photo",
+    "removeAvatar": "Remove",
+    "avatarHint": "JPG or PNG, up to 2 MB. For now the photo is only previewed locally.",
+    "fullName": "Full name",
+    "email": "Email",
+    "emailHint": "To change your email, go to Settings › Account.",
+    "jobTitle": "Job title",
+    "phone": "Phone",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us a bit about yourself…",
+    "timezone": "Time zone",
+    "role": "Role",
+    "memberSince": "Member since",
+    "lastSignIn": "Last sign-in"
+  },
+  "settings": {
+    "eyebrow": "Settings",
+    "title": "Account settings",
+    "subtitle": "Preferences, security and notifications.",
+    "tabs": {
+      "account": "Account",
+      "security": "Security",
+      "notifications": "Notifications"
+    },
+    "account": {
+      "emailTitle": "Sign-in email",
+      "emailBody": "When you change it, we'll send a confirmation link to the new address.",
+      "newEmail": "New email",
+      "changeEmail": "Change email",
+      "emailSent": "Confirmation link sent to {email}.",
+      "prefsTitle": "Preferences",
+      "language": "Language",
+      "timezone": "Time zone",
+      "currentEmail": "Current email: {email}"
+    },
+    "security": {
+      "passwordTitle": "Change password",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "submit": "Update password",
+      "updated": "Password updated.",
+      "sessionsTitle": "Active sessions",
+      "sessionsBody": "Devices connected to your account.",
+      "current_session": "This session",
+      "thisBrowser": "This browser"
+    },
+    "notifications": {
+      "title": "Email notifications",
+      "security": "Security alerts",
+      "securityHint": "New sign-ins and password changes. Recommended.",
+      "product": "Product news",
+      "productHint": "Launches and improvements, at most once a month.",
+      "weekly": "Weekly summary",
+      "weeklyHint": "Your metrics every Monday.",
+      "mentions": "Team activity",
+      "mentionsHint": "Invitations and role changes."
+    }
+  },
+  "users": {
+    "eyebrow": "Administration",
+    "title": "Users",
+    "subtitle": "Invite people, set roles and control access.",
+    "invite": "New user",
+    "inviteTitle": "Create user",
+    "inviteBody": "Set the email and password. The account is active right away and they sign in directly.",
+    "inviteEmail": "Email",
+    "inviteRole": "Role",
+    "sendInvite": "Create",
+    "invited": "User {email} created.",
+    "search": "Search by name or email",
+    "count": "{count, plural, one {# user} other {# users}}",
+    "empty": "No users found.",
+    "columns": {
+      "user": "User",
+      "role": "Role",
+      "status": "Status",
+      "lastSignIn": "Last sign-in",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "invited": "Invited",
+      "disabled": "Disabled"
+    },
+    "disable": "Disable",
+    "enable": "Enable",
+    "resend": "Resend invite",
+    "self": "You",
+    "denied": {
+      "title": "Restricted access",
+      "body": "This area is for administrators only.",
+      "back": "Back to home"
+    },
+    "emptyAll": "No users yet. Invite the first one.",
+    "invitePlaceholder": "person@company.com",
+    "resent": "Access link resent to {email}.",
+    "invitePassword": "Password",
+    "invitePasswordPlaceholder": "At least 8 characters"
+  },
+  "errors": {
+    "invalidCredentials": "Incorrect email or password.",
+    "accountDisabled": "This account is disabled. Contact the administrator.",
+    "linkExpired": "The link is invalid or has expired. Request a new one.",
+    "invalidEmail": "Enter a valid email.",
+    "tooShort": "Password must be at least 8 characters.",
+    "samePassword": "The new password must be different from the current one.",
+    "wrongPassword": "The current password is incorrect.",
+    "emailExists": "An account with this email already exists.",
+    "required": "This field is required.",
+    "generic": "Something went wrong. Please try again.",
+    "signedOut": "Your session expired. Please sign in again.",
+    "forbidden": "You don't have permission for this action.",
+    "missingSecretKey": "User creation unavailable: set SUPABASE_SECRET_KEY in .env.local and restart the server.",
+    "alreadyInvited": "There is already a pending registration for this email.",
+    "invalidImage": "Use JPG, PNG or WEBP up to 2 MB.",
+    "weakPassword": "Weak password: mix letters and numbers and avoid common passwords."
+  }
+}
